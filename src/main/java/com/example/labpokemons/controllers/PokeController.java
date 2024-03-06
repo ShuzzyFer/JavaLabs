@@ -12,8 +12,11 @@ import java.util.List;
 
 @RestController
 public class PokeController {
+    private final PokemonRepository pokemonRepository;
     @Autowired
-    private PokemonRepository pokemonRepository;
+    PokeController(PokemonRepository pokemonRepository){
+        this.pokemonRepository=pokemonRepository;
+    }
     @GetMapping("/pokemons/{params}")
     public List<Pokemon> getPokemons(@PathVariable(name = "params") String name) throws IOException {
         Pokemon pokemon=OkHttpRequest.get(name).getPokemons().get(0);

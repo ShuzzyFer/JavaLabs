@@ -12,11 +12,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class PokeControllerTest {
+class PokeControllerTest {
 @Autowired
 private PokeController pokeController;
     @Test
-    public void testGetPokemonsList() throws IOException {
+    void testGetPokemonsList() throws IOException {
         List<Pokemon> pokemons = pokeController.getPokemons();
         // Assert that the list is not empty
         assertFalse(pokemons.isEmpty());
@@ -28,7 +28,7 @@ private PokeController pokeController;
     }
 
     @Test
-    public void testGetPokemonByName() throws IOException {
+    void testGetPokemonByName() throws IOException {
         List<Pokemon> pokemonList = pokeController.getPokemons();
         assertEquals(20, pokemonList.size());
     }
