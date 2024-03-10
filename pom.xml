@@ -54,6 +54,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.oscar0812</groupId>
+            <artifactId>pokeapi</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

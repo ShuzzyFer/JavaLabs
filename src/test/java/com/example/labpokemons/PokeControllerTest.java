@@ -1,7 +1,7 @@
 package com.example.labpokemons;
 
 import com.example.labpokemons.controllers.PokeController;
-import com.example.labpokemons.models.Pokemon;
+import com.example.labpokemons.models.MyPokemon;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,11 +17,11 @@ class PokeControllerTest {
 private PokeController pokeController;
     @Test
     void testGetPokemonsList() throws IOException {
-        List<Pokemon> pokemons = pokeController.getPokemons();
+        List<MyPokemon> pokemons = pokeController.getPokemons();
         // Assert that the list is not empty
         assertFalse(pokemons.isEmpty());
         // Assert that each PokemonData object has a name and url
-        for (Pokemon pokemon : pokemons) {
+        for (MyPokemon pokemon : pokemons) {
             assertNotNull(pokemon.getName());
             assertNotNull(pokemon.getUrl());
         }
@@ -29,7 +29,7 @@ private PokeController pokeController;
 
     @Test
     void testGetPokemonByName() throws IOException {
-        List<Pokemon> pokemonList = pokeController.getPokemons();
+        List<MyPokemon> pokemonList = pokeController.getPokemons();
         assertEquals(20, pokemonList.size());
     }
 }

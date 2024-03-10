@@ -6,7 +6,7 @@ public class PokemonListResponse {
     private int count;
     private String next;
     private String previous;
-    private List<Pokemon> results;
+    private List<MyPokemon> results;
     public int getCount() {
         return count;
     }
@@ -25,13 +25,13 @@ public class PokemonListResponse {
     public void setPrevious(String previous) {
         this.previous = previous;
     }
-    public List<Pokemon> getPokemons() {
+    public List<MyPokemon> getPokemons() {
         return results;
     }
-    public void setPokemons(List<Pokemon> pokemons) {
+    public void setPokemons(List<MyPokemon> pokemons) {
         this.results = pokemons;
     }
-    public PokemonListResponse(int count, String next, String previous, List<Pokemon> pokemons) {
+    public PokemonListResponse(int count, String next, String previous, List<MyPokemon> pokemons) {
         this.count = count;
         this.next = next;
         this.previous = previous;
