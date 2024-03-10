@@ -52,10 +52,7 @@ public class PokeController {
         pokemon.setAbilities(abilities);
         System.out.println(pokemon.getAbilities().get(0).getId());
         pokemonRepository.save(pokemon);
-        for(int i=0; i<abilities.size();i++)
-        {
-            abilityRepository.save(abilities.get(i));
-        }
+        abilityRepository.saveAll(abilities);
         return OkHttpRequest.get(name).getPokemons();
     }
     @GetMapping("/pokemons")
