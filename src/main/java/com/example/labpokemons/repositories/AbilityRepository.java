@@ -9,5 +9,8 @@ import java.util.List;
 
 public interface AbilityRepository extends JpaRepository<Ability, Long> {
     @Query("SELECT ability FROM Ability ability WHERE ability.name=?1")
-    List<MyPokemon> searchByName(String name);
+    List<Ability> searchByName(String name);
+    @Query("SELECT ability FROM Ability ability WHERE ability.id=?1")
+    Ability searchById(Long id);
+
 }

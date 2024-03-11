@@ -16,6 +16,7 @@ public class MyPokemon {
     private String url;
 
     @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Ability> abilities;
 
     public MyPokemon() {

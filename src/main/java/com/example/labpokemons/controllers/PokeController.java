@@ -25,7 +25,7 @@ public class PokeController {
         return pokemonService.getPokemonsListByParams(name);
     }
     @GetMapping("/getPokemon/{name}")
-    public List<MyPokemon> getPokemon(@PathVariable(name="name") String name) throws IOException {
+    public List<MyPokemon> getPokemon(@PathVariable(name="name") String name) {
         return pokemonService.searchByName(name);
     }
     @PostMapping("/postPokemon")
@@ -33,12 +33,12 @@ public class PokeController {
         pokemonService.insertPokemon(pokemon);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deletePokemon/{id}")
     public void deletePokemon(@PathVariable(name="id") Long id) {
         pokemonService.deletePokemonById(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/updatePokemon/{id}")
     public void updatePokemon(@RequestBody MyPokemon pokemon, @PathVariable(name="id") Long id) {
         pokemonService.updatePokemon(pokemon, id);
     }

@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Table(name="abilities")
 public class Ability {
     String name;
-    String Description;
+    String description;
     @Id
     private Long id;
     @ManyToOne // This defines the ManyToOne relationship (opposite side of OneToMany)
@@ -32,11 +32,11 @@ public class Ability {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public Long getId() {

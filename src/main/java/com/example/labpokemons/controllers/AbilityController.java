@@ -15,12 +15,12 @@ public class AbilityController {
         this.abilityService = abilityService;
     }
     @GetMapping("/getAbility/{name}")
-    public List<MyPokemon> getPokemon(@PathVariable(name="name") String name) throws IOException {
+    public List<Ability> getAbility(@PathVariable(name="name") String name) {
         return abilityService.searchByName(name);
     }
-    @PostMapping("/postAbility")
-    public void insertPokemon(@RequestBody Ability ability) {
-        abilityService.insertAbility(ability);
+    @PostMapping("/postAbility/{id}")
+    public void insertAbility(@RequestBody Ability ability, @PathVariable(name="id") Long id) {
+        abilityService.insertAbility(ability, id);
     }
     @DeleteMapping("/delete/{id}")
     public void deleteAbility(@PathVariable(name="id") Long id) {
