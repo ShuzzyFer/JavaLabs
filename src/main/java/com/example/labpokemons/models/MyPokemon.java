@@ -1,5 +1,6 @@
 package com.example.labpokemons.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -47,5 +48,13 @@ public class MyPokemon {
     public MyPokemon(String name, String url) {
         this.name = name;
         this.url = url;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
