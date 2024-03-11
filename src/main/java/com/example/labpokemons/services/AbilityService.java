@@ -24,7 +24,8 @@ public class AbilityService {
         Ability ability = new Ability();
         ability.setDescription(pokemon.getAbilities().get(i).getAbility().getFlavorTextEntries().get(0).getFlavorText());
         ability.setName(pokemon.getAbilities().get(i).getAbility().getName());
-        int min=1, max=100000;
+        int min=1;
+        int max=100000;
         Long iden;
         while(true) {
             iden = (long) ((SecureRandom.getInstanceStrong().nextDouble() * ++max) + min);
