@@ -28,7 +28,7 @@ public class PokemonService {
             MyPokemon pokemon = pokemons.get(j);
             pokemon.setAbilities(abilities);
             for (int i = 0; i < pok.getAbilities().size(); i++) {
-                Ability ability= abilityService.parseAbility(pok, i, j);
+                Ability ability= abilityService.parseAbility(pok, i);
                 ability.setPokemon(pokemon);
                 abilities.add(ability);
             }

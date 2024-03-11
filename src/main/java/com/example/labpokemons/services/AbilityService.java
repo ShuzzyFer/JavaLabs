@@ -1,7 +1,6 @@
 package com.example.labpokemons.services;
 
 import com.example.labpokemons.models.Ability;
-import com.example.labpokemons.models.MyPokemon;
 import com.example.labpokemons.repositories.AbilityRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
 import com.github.oscar0812.pokeapi.models.pokemon.Pokemon;
@@ -19,20 +18,18 @@ public class AbilityService {
         this.pokemonRepository = pokemonRepository;
     }
 
-    public Ability parseAbility(Pokemon pokemon, int i, int j) {
+    public Ability parseAbility(Pokemon pokemon, int i) {
         Ability ability = new Ability();
         ability.setDescription(pokemon.getAbilities().get(i).getAbility().getFlavorTextEntries().get(0).getFlavorText());
         ability.setName(pokemon.getAbilities().get(i).getAbility().getName());
-        Long iden= 1L;
-        for(int k=0, l=1; k<l;k++) {
-            if(abilityRepository.findById(iden).isPresent()) {
-                iden++;
-                l++;
-            }
-            else {
-                ability.setId(iden);
-            }
+        int min=1, max=100000;
+        Long iden;
+        while(true) {
+            iden= (long) ((Math.random() * ++max) + min);
+            if(!abilityRepository.findById(iden).isPresent())
+                break;
         }
+        ability.setId(iden);
         return ability;
     }
     public List<Ability> searchByName(String name) {

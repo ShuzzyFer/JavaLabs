@@ -1,7 +1,6 @@
 package com.example.labpokemons.repositories;
 
 import com.example.labpokemons.models.Ability;
-import com.example.labpokemons.models.MyPokemon;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
