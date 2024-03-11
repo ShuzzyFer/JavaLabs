@@ -6,6 +6,8 @@ import com.example.labpokemons.repositories.PokemonRepository;
 import com.github.oscar0812.pokeapi.models.pokemon.Pokemon;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.List;
 
 @Service
@@ -18,14 +20,14 @@ public class AbilityService {
         this.pokemonRepository = pokemonRepository;
     }
 
-    public Ability parseAbility(Pokemon pokemon, int i) {
+    public Ability parseAbility(Pokemon pokemon, int i) throws NoSuchAlgorithmException {
         Ability ability = new Ability();
         ability.setDescription(pokemon.getAbilities().get(i).getAbility().getFlavorTextEntries().get(0).getFlavorText());
         ability.setName(pokemon.getAbilities().get(i).getAbility().getName());
         int min=1, max=100000;
         Long iden;
         while(true) {
-            iden= (long) ((Math.random() * ++max) + min);
+            iden = (long) ((SecureRandom.getInstanceStrong().nextDouble() * ++max) + min);
             if(!abilityRepository.findById(iden).isPresent())
                 break;
         }

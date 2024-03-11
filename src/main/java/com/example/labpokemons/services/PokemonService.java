@@ -8,6 +8,7 @@ import com.github.oscar0812.pokeapi.utils.Client;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class PokemonService {
         this.pokemonRepository = pokemonRepository;
         this.abilityService = abilityService;
     }
-    public List<MyPokemon> getPokemonsListByParams(String name) throws IOException {
+    public List<MyPokemon> getPokemonsListByParams(String name) throws IOException, NoSuchAlgorithmException {
         List<MyPokemon> pokemons=OkHttpRequest.get(name).getPokemons();
         for(int j=0; j<pokemons.size(); j++)
         {

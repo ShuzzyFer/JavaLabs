@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class PokeController {
 
     @Transactional
     @GetMapping("/pokemons/{params}")
-    public List<MyPokemon> getPokemons(@PathVariable(name = "params") String name) throws IOException {
+    public List<MyPokemon> getPokemons(@PathVariable(name = "params") String name) throws IOException, NoSuchAlgorithmException {
         return pokemonService.getPokemonsListByParams(name);
     }
     @GetMapping("/getPokemon/{name}")
