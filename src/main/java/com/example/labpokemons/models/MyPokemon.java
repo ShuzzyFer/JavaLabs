@@ -14,7 +14,7 @@ public class MyPokemon {
     private String name;
     private String url;
 
-    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL)
     private List<Ability> abilities;
 
     public MyPokemon() {
