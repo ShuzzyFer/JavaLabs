@@ -58,7 +58,7 @@ public class PokemonService {
             if (pok.isPresent()) {
                 Optional<Food> foo=pokemonRepository.searchById(id).getFood().stream().findFirst();
                 if(foo.isPresent()) {
-                    Food food = pokemonRepository.searchById(id).getFood().stream().findFirst().get();
+                    Food food = foo.get();
                     food.getPokemons().remove(pokemonRepository.searchById(id));
                     MyPokemon pokemon = pokemonRepository.searchById(id);
                     pokemon.getFood().remove(food);
