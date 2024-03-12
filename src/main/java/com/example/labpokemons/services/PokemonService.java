@@ -56,15 +56,18 @@ public class PokemonService {
         for(int i=0; i<pokemonRepository.searchById(id).getFood().size();i++) {
             Optional<MyPokemon> pok=pokemonRepository.findById(id);
             if (pok.isPresent()) {
-                Food food = pokemonRepository.searchById(id).getFood().stream().findFirst().get();
-                food.getPokemons().remove(pokemonRepository.searchById(id));
-                MyPokemon pokemon = pokemonRepository.searchById(id);
-                pokemon.getFood().remove(food);
-                updatePokemon(pokemon, pokemonRepository.searchById(id).getId());
-                if (food.getPokemons().isEmpty())
-                    foodService.deleteFoodById(food.getId());
-                else
-                    foodService.updateFood(food, food.getId());
+                Optional<Food> foo=pokemonRepository.searchById(id).getFood().stream().findFirst();
+                if(foo.isPresent()) {
+                    Food food = pokemonRepository.searchById(id).getFood().stream().findFirst().get();
+                    food.getPokemons().remove(pokemonRepository.searchById(id));
+                    MyPokemon pokemon = pokemonRepository.searchById(id);
+                    pokemon.getFood().remove(food);
+                    updatePokemon(pokemon, pokemonRepository.searchById(id).getId());
+                    if (food.getPokemons().isEmpty())
+                        foodService.deleteFoodById(food.getId());
+                    else
+                        foodService.updateFood(food, food.getId());
+                }
             }
         }
         pokemonRepository.deleteById(id);
