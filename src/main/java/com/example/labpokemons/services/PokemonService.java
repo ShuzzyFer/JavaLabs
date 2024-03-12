@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PokemonService {
@@ -53,7 +54,8 @@ public class PokemonService {
     }
     public void deletePokemonById(Long id) {
         for(int i=0; i<pokemonRepository.searchById(id).getFood().size();i++) {
-            if (pokemonRepository.searchById(id).getFood().stream().findFirst().isPresent()) {
+            Optional<MyPokemon> pok=pokemonRepository.findById(id);
+            if (pok.isPresent()) {
                 Food food = pokemonRepository.searchById(id).getFood().stream().findFirst().get();
                 food.getPokemons().remove(pokemonRepository.searchById(id));
                 MyPokemon pokemon = pokemonRepository.searchById(id);
