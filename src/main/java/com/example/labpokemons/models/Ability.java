@@ -10,8 +10,8 @@ public class Ability {
     String description;
     @Id
     private Long id;
-    @ManyToOne // This defines the ManyToOne relationship (opposite side of OneToMany)
-    @JoinColumn(name = "pokemon_id") // This specifies the foreign key column
+    @ManyToOne
+    @JoinColumn(name = "pokemon_id")
     @JsonIgnore
     private MyPokemon pokemon;
 

@@ -1,7 +1,9 @@
 package com.example.labpokemons.services;
 
 import com.example.labpokemons.models.Ability;
+import com.example.labpokemons.models.Food;
 import com.example.labpokemons.models.MyPokemon;
+import com.example.labpokemons.repositories.FoodRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
 import com.github.oscar0812.pokeapi.models.pokemon.Pokemon;
 import com.github.oscar0812.pokeapi.utils.Client;
@@ -16,9 +18,13 @@ import java.util.List;
 public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final AbilityService abilityService;
-    public PokemonService(PokemonRepository pokemonRepository, AbilityService abilityService) {
+    private final FoodService foodService;
+    private final FoodRepository foodRepository;
+    public PokemonService(PokemonRepository pokemonRepository, AbilityService abilityService, FoodService foodService, FoodRepository foodRepository) {
         this.pokemonRepository = pokemonRepository;
         this.abilityService = abilityService;
+        this.foodService = foodService;
+        this.foodRepository = foodRepository;
     }
     public List<MyPokemon> getPokemonsListByParams(String name) throws IOException, NoSuchAlgorithmException {
         List<MyPokemon> pokemons=OkHttpRequest.get(name).getPokemons();
@@ -46,6 +52,19 @@ public class PokemonService {
         pokemonRepository.save(pokemon);
     }
     public void deletePokemonById(Long id) {
+        for(int i=0; i<pokemonRepository.searchById(id).getFood().size();i++) {
+            if (pokemonRepository.searchById(id).getFood().stream().findFirst().isPresent()) {
+                Food food = pokemonRepository.searchById(id).getFood().stream().findFirst().get();
+                food.getPokemons().remove(pokemonRepository.searchById(id));
+                MyPokemon pokemon = pokemonRepository.searchById(id);
+                pokemon.getFood().remove(food);
+                updatePokemon(pokemon, pokemonRepository.searchById(id).getId());
+                if(food.getPokemons().isEmpty())
+                    foodService.deleteFoodById(food.getId());
+                else
+                    foodService.updateFood(food, food.getId());
+            }
+        }
         pokemonRepository.deleteById(id);
     }
     public void updatePokemon(MyPokemon pokemon, Long id) {

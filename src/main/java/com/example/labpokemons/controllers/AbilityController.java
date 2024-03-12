@@ -19,11 +19,11 @@ public class AbilityController {
     public void insertAbility(@RequestBody Ability ability, @PathVariable(name="id") Long id) {
         abilityService.insertAbility(ability, id);
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteAbility/{id}")
     public void deleteAbility(@PathVariable(name="id") Long id) {
         abilityService.deleteAbilityById(id);
     }
-    @PutMapping("/update/{id}")
+    @PutMapping("/updateAbility/{id}")
     public void updateAbility(@RequestBody Ability ability, @PathVariable(name="id") Long id) {
         abilityService.updateAbility(ability, id);
     }

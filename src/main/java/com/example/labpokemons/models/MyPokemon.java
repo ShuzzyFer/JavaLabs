@@ -3,7 +3,9 @@ package com.example.labpokemons.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "pokemons")
@@ -57,5 +59,17 @@ public class MyPokemon {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pokemons")
+    private Set<Food> food = new HashSet<>();
+
+    public Set<Food> getFood() {
+        return food;
+    }
+
+    public void setFood(Set<Food> food) {
+        this.food = food;
     }
 }
