@@ -1,10 +1,8 @@
 package com.example.labpokemons.controllers;
 
-import com.example.labpokemons.models.Ability;
 import com.example.labpokemons.models.Food;
 import com.example.labpokemons.services.FoodService;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 

@@ -1,11 +1,9 @@
 package com.example.labpokemons.services;
 
-import com.example.labpokemons.models.Ability;
 import com.example.labpokemons.models.Food;
 import com.example.labpokemons.repositories.FoodRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
