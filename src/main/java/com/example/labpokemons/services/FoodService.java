@@ -51,7 +51,7 @@ public class FoodService {
     public Set<MyPokemon> getPokemons(Long id) {
         Optional<Food> food=foodRepository.findById(id);
         if(food.isPresent())
-            return foodRepository.findById(id).get().getPokemons();
+            return food.get().getPokemons();
         else {
             Set<MyPokemon> pokemons= new HashSet<>();
             return pokemons;
