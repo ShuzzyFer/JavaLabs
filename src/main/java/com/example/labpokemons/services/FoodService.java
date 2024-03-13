@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -47,7 +48,8 @@ public class FoodService {
     }
 
     public Set<MyPokemon> getPokemons(Long id) {
-        if(foodRepository.findById(id).isPresent())
+        Optional<Food> food=foodRepository.findById(id);
+        if(food.isPresent())
             return foodRepository.findById(id).get().getPokemons();
         else return null;
     }
