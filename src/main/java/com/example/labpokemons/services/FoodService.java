@@ -52,9 +52,7 @@ public class FoodService {
         Optional<Food> food=foodRepository.findById(id);
         if(food.isPresent())
             return food.get().getPokemons();
-        else {
-            Set<MyPokemon> pokemons= new HashSet<>();
-            return pokemons;
-        }
+        else
+            return new HashSet<>();
     }
 }
