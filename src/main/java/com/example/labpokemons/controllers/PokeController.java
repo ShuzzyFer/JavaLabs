@@ -1,5 +1,7 @@
 package com.example.labpokemons.controllers;
 
+import com.example.labpokemons.models.Ability;
+import com.example.labpokemons.models.Food;
 import com.example.labpokemons.models.MyPokemon;
 import com.example.labpokemons.services.PokemonService;
 import jakarta.transaction.Transactional;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class PokeController {
@@ -42,5 +45,14 @@ public class PokeController {
     @PutMapping("/updatePokemon/{id}")
     public void updatePokemon(@RequestBody MyPokemon pokemon, @PathVariable(name="id") Long id) {
         pokemonService.updatePokemon(pokemon, id);
+    }
+
+    @GetMapping("/getPokemonAbilities/{id}")
+    public List<Ability> getAbilities(@PathVariable(name="id") Long id) {
+        return pokemonService.getAbilities(id);
+    }
+    @GetMapping("/getPokemonFood/{id}")
+    public Set<Food> getFood(@PathVariable(name="id") Long id) {
+        return pokemonService.getFood(id);
     }
 }

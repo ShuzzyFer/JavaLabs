@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PokemonService {
@@ -75,5 +76,13 @@ public class PokemonService {
     public void updatePokemon(MyPokemon pokemon, Long id) {
         pokemon.setId(id);
         pokemonRepository.save(pokemon);
+    }
+
+    public List<Ability> getAbilities(Long id) {
+        return pokemonRepository.searchById(id).getAbilities();
+    }
+
+    public Set<Food> getFood(Long id) {
+        return pokemonRepository.searchById(id).getFood();
     }
 }

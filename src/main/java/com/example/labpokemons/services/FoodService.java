@@ -1,12 +1,14 @@
 package com.example.labpokemons.services;
 
 import com.example.labpokemons.models.Food;
+import com.example.labpokemons.models.MyPokemon;
 import com.example.labpokemons.repositories.FoodRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class FoodService {
@@ -42,5 +44,11 @@ public class FoodService {
     public void updateFood(Food food, Long id) {
         food.setId(id);
         foodRepository.save(food);
+    }
+
+    public Set<MyPokemon> getPokemons(Long id) {
+        if(foodRepository.findById(id).isPresent())
+            return foodRepository.findById(id).get().getPokemons();
+        else return null;
     }
 }
