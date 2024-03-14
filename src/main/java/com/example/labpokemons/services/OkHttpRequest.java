@@ -6,12 +6,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.stereotype.Service;
+
 import java.io.IOException;
+
 @Service
 public class OkHttpRequest {
-    private OkHttpRequest() {}
+    private OkHttpRequest() {
+    }
+
     static Gson gson = new Gson();
     private static final String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
+
     public static PokemonListResponse get(String endpoint) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(BASE_URL + '?' + endpoint).build();

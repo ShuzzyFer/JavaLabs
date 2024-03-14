@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="food")
+@Table(name = "food")
 public class Food {
     @Id
     private Long id;
@@ -38,8 +38,9 @@ public class Food {
     public void setDescription(String description) {
         this.description = description;
     }
+
     @JsonIgnore
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "pokemon_food",
             joinColumns = @JoinColumn(name = "food_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pokemon_id", referencedColumnName = "id"))

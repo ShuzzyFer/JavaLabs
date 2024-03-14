@@ -28,31 +28,34 @@ public class PokeController {
     public List<MyPokemon> getPokemons(@PathVariable(name = "params") String name) throws IOException, NoSuchAlgorithmException {
         return pokemonService.getPokemonsListByParams(name);
     }
+
     @GetMapping("/getPokemon/{name}")
-    public List<MyPokemon> getPokemon(@PathVariable(name="name") String name) {
+    public List<MyPokemon> getPokemon(@PathVariable(name = "name") String name) {
         return pokemonService.searchByName(name);
     }
+
     @PostMapping("/postPokemon")
     public void insertPokemon(@RequestBody MyPokemon pokemon) {
         pokemonService.insertPokemon(pokemon);
     }
 
     @DeleteMapping("/deletePokemon/{id}")
-    public void deletePokemon(@PathVariable(name="id") Long id) {
+    public void deletePokemon(@PathVariable(name = "id") Long id) {
         pokemonService.deletePokemonById(id);
     }
 
     @PutMapping("/updatePokemon/{id}")
-    public void updatePokemon(@RequestBody MyPokemon pokemon, @PathVariable(name="id") Long id) {
+    public void updatePokemon(@RequestBody MyPokemon pokemon, @PathVariable(name = "id") Long id) {
         pokemonService.updatePokemon(pokemon, id);
     }
 
     @GetMapping("/getPokemonAbilities/{id}")
-    public List<Ability> getAbilities(@PathVariable(name="id") Long id) {
+    public List<Ability> getAbilities(@PathVariable(name = "id") Long id) {
         return pokemonService.getAbilities(id);
     }
+
     @GetMapping("/getPokemonFood/{id}")
-    public Set<Food> getFood(@PathVariable(name="id") Long id) {
+    public Set<Food> getFood(@PathVariable(name = "id") Long id) {
         return pokemonService.getFood(id);
     }
 }
