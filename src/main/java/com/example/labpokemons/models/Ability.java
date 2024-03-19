@@ -9,6 +9,7 @@ public class Ability {
     String name;
     String description;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "pokemon_id")

@@ -10,6 +10,7 @@ import java.util.Set;
 @Table(name = "food")
 public class Food {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public void setId(Long id) {

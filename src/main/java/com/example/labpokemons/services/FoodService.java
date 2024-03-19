@@ -7,8 +7,7 @@ import com.example.labpokemons.repositories.FoodRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -28,35 +27,26 @@ public class FoodService {
 
     public Food searchByName(String name) {
         Food food = entityCache.get(name);
-        if(food==null) {
-            food =foodRepository.searchByName(name);
+        if (food == null) {
+            food = foodRepository.searchByName(name);
             entityCache.put(food.getName(), food);
         }
         return foodRepository.searchByName(name);
     }
 
-    public void insertFood(Food food, List<Long> ids) throws NoSuchAlgorithmException {
-        if(foodRepository.searchByName(food.getName())!=null)
+    public void insertFood(Food food, List<Long> ids) {
+        if (foodRepository.searchByName(food.getName()) != null)
             return;
         for (int i = 0; i < ids.size(); i++) {
             food.getPokemons().add(pokemonRepository.searchById(ids.get(i)));
         }
-        int min = 1;
-        int max = 100000;
-        Long iden;
-        while (true) {
-            iden = (long) ((SecureRandom.getInstanceStrong().nextDouble() * ++max) + min);
-            if (!foodRepository.findById(iden).isPresent())
-                break;
-        }
-        food.setId(iden);
         entityCache.put(food.getName(), food);
         foodRepository.save(food);
     }
 
     public void deleteFoodById(Long id) {
         Optional<Food> food = foodRepository.findById(id);
-        if(food.isPresent()) {
+        if (food.isPresent()) {
             entityCache.remove(food.get().getName());
         }
         foodRepository.deleteById(id);
@@ -65,7 +55,7 @@ public class FoodService {
     public void updateFood(Food food, Long id) {
         food.setId(id);
         Optional<Food> foodOld = foodRepository.findById(id);
-        if(foodOld.isPresent()) {
+        if (foodOld.isPresent()) {
             entityCache.remove(foodOld.get().getName());
         }
         entityCache.put(food.getName(), food);
