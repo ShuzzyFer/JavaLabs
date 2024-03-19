@@ -5,7 +5,6 @@ import com.example.labpokemons.models.MyPokemon;
 import com.example.labpokemons.services.FoodService;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +22,7 @@ public class FoodController {
     }
 
     @PostMapping("/postFood/{id}")
-    public void insertAbility(@RequestBody Food food, @PathVariable(name = "id") List<Long> id) throws NoSuchAlgorithmException {
+    public void insertAbility(@RequestBody Food food, @PathVariable(name = "id") List<Long> id) {
         foodService.insertFood(food, id);
     }
 

@@ -30,7 +30,7 @@ public class PokemonService {
         this.foodRepository = foodRepository;
     }
 
-    public List<MyPokemon> getPokemonsListByParams(String name) throws IOException, NoSuchAlgorithmException {
+    public List<MyPokemon> getPokemonsListByParams(String name) throws IOException {
         List<MyPokemon> pokemons = OkHttpRequest.get(name).getPokemons();
         for (int j = 0; j < pokemons.size(); j++) {
             List<Ability> abilities = new ArrayList<>();
