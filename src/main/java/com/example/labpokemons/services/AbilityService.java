@@ -1,5 +1,6 @@
 package com.example.labpokemons.services;
 
+import com.example.labpokemons.cache.AbilityCache;
 import com.example.labpokemons.models.Ability;
 import com.example.labpokemons.repositories.AbilityRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
@@ -14,10 +15,11 @@ import java.util.List;
 public class AbilityService {
     private final AbilityRepository abilityRepository;
     private final PokemonRepository pokemonRepository;
-
-    public AbilityService(AbilityRepository abilityRepository, PokemonRepository pokemonRepository) {
+    private final AbilityCache cache;
+    public AbilityService(AbilityRepository abilityRepository, PokemonRepository pokemonRepository, AbilityCache cache) {
         this.abilityRepository = abilityRepository;
         this.pokemonRepository = pokemonRepository;
+        this.cache = cache;
     }
 
     public Ability parseAbility(Pokemon pokemon, int i) throws NoSuchAlgorithmException {
@@ -36,7 +38,15 @@ public class AbilityService {
     }
 
     public List<Ability> searchByName(String name) {
-        return abilityRepository.searchByName(name);
+        long startTime=System.currentTimeMillis();
+        List<Ability> abilities=cache.get(name);
+        if (abilities==null) {
+            abilities= abilityRepository.searchByName(name);
+            cache.put(name, abilities);
+        }
+        long endTime=System.currentTimeMillis();
+        System.out.println(endTime-startTime+"мс");
+        return abilities;
     }
 
     public void insertAbility(Ability ability, Long id) {

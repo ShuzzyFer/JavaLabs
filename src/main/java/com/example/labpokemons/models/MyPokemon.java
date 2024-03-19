@@ -20,6 +20,9 @@ public class MyPokemon {
     @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Ability> abilities;
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pokemons")
+    private Set<Food> food = new HashSet<>();
 
     public MyPokemon() {
     }
@@ -61,9 +64,6 @@ public class MyPokemon {
         this.id = id;
     }
 
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pokemons")
-    private Set<Food> food = new HashSet<>();
 
     public Set<Food> getFood() {
         return food;
