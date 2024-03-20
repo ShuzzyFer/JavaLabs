@@ -1,6 +1,5 @@
 package com.example.labpokemons.controllers;
 
-import com.example.labpokemons.models.Ability;
 import com.example.labpokemons.models.Food;
 import com.example.labpokemons.models.MyPokemon;
 import com.example.labpokemons.services.PokemonService;
