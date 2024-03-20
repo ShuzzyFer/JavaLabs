@@ -48,11 +48,6 @@ public class PokeController {
         pokemonService.updatePokemon(pokemon, id);
     }
 
-    @GetMapping("/getPokemonAbilities/{id}")
-    public List<Ability> getAbilities(@PathVariable(name = "id") Long id) {
-        return pokemonService.getAbilities(id);
-    }
-
     @GetMapping("/getPokemonFood/{id}")
     public Set<Food> getFood(@PathVariable(name = "id") Long id) {
         return pokemonService.getFood(id);

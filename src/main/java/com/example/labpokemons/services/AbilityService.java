@@ -42,4 +42,7 @@ public class AbilityService {
         ability.setId(id);
         abilityRepository.save(ability);
     }
+    public List<Ability> searchByPokemonName(String name) {
+        return abilityRepository.searchAbilitiesByPokemon(name);
+    }
 }

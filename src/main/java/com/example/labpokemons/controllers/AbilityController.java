@@ -33,4 +33,8 @@ public class AbilityController {
     public void updateAbility(@RequestBody Ability ability, @PathVariable(name = "id") Long id) {
         abilityService.updateAbility(ability, id);
     }
+    @GetMapping("/getPokemonAbilities/{name}")
+    public List<Ability> getAbilities(@PathVariable(name = "name") String name) {
+        return abilityService.searchByPokemonName(name);
+    }
 }

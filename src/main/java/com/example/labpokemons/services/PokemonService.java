@@ -81,10 +81,6 @@ public class PokemonService {
         pokemonRepository.save(pokemon);
     }
 
-    public List<Ability> getAbilities(Long id) {
-        return pokemonRepository.searchById(id).getAbilities();
-    }
-
     public Set<Food> getFood(Long id) {
         return pokemonRepository.searchById(id).getFood();
     }

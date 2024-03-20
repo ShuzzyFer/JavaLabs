@@ -15,4 +15,6 @@ public interface AbilityRepository extends JpaRepository<Ability, Long> {
     @Query("SELECT ability FROM Ability ability WHERE ability.id=?1")
     Ability searchById(Long id);
 
+    @Query("SELECT ability FROM Ability ability WHERE ability.pokemon.name=?1")
+    List<Ability> searchAbilitiesByPokemon(String name);
 }
