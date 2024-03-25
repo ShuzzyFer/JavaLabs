@@ -20,7 +20,9 @@ public class AbilityService {
 
     public Ability parseAbility(Pokemon pokemon, int i) {
         Ability ability = new Ability();
-        ability.setDescription(pokemon.getAbilities().get(i).getAbility().getFlavorTextEntries().get(0).getFlavorText());
+        ability.setDescription(pokemon.getAbilities().get(i).getAbility().getFlavorTextEntries()
+                .get(0)
+                .getFlavorText());
         ability.setName(pokemon.getAbilities().get(i).getAbility().getName());
         return ability;
     }

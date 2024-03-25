@@ -51,4 +51,9 @@ public class PokeController {
     public Set<Food> getFood(@PathVariable(name = "id") Long id) {
         return pokemonService.getFood(id);
     }
+
+    @GetMapping("/getAllPokemons")
+    public List<MyPokemon> getALL() {
+        return pokemonService.getALL();
+    }
 }

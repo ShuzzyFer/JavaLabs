@@ -19,7 +19,8 @@ public class FoodService {
     private final PokemonRepository pokemonRepository;
     private final EntityCache<String, Food> entityCache;
 
-    public FoodService(FoodRepository foodRepository, PokemonRepository pokemonRepository, EntityCache<String, Food> entityCache) {
+    public FoodService(FoodRepository foodRepository, PokemonRepository pokemonRepository,
+                       EntityCache<String, Food> entityCache) {
         this.foodRepository = foodRepository;
         this.pokemonRepository = pokemonRepository;
         this.entityCache = entityCache;

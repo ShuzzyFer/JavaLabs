@@ -22,7 +22,9 @@ public class PokemonService {
     private final FoodService foodService;
     private final FoodRepository foodRepository;
 
-    public PokemonService(PokemonRepository pokemonRepository, AbilityService abilityService, FoodService foodService, FoodRepository foodRepository) {
+    public PokemonService(PokemonRepository pokemonRepository, AbilityService abilityService,
+                          FoodService foodService,
+                          FoodRepository foodRepository) {
         this.pokemonRepository = pokemonRepository;
         this.abilityService = abilityService;
         this.foodService = foodService;
@@ -83,5 +85,14 @@ public class PokemonService {
 
     public Set<Food> getFood(Long id) {
         return pokemonRepository.searchById(id).getFood();
+    }
+
+    public List<MyPokemon> getALL() {
+        int counter=pokemonRepository.findAll().size();
+        List<MyPokemon> pokemons=new ArrayList<>();
+        for(int i=0; i<counter;i++) {
+            pokemons.add(pokemonRepository.findAll().get(i));
+        }
+        return pokemons;
     }
 }
