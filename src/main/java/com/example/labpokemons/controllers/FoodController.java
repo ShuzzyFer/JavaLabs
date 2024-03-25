@@ -40,4 +40,9 @@ public class FoodController {
     public Set<MyPokemon> getPokemons(@PathVariable(name = "id") Long id) {
         return foodService.getPokemons(id);
     }
+
+    @GetMapping("/getAllFood")
+    public List<Food> getALL() {
+        return foodService.getALL();
+    }
 }

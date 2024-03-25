@@ -8,10 +8,7 @@ import com.example.labpokemons.repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
 
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class FoodService {
@@ -69,5 +66,16 @@ public class FoodService {
             return food.get().getPokemons();
         else
             return new HashSet<>();
+    }
+
+    public List<Food> getALL() {
+        int counter=foodRepository.findAll().size();
+        List<Food> foodList=new ArrayList<>();
+        for(int i=0; i<counter;i++) {
+            Food food=foodRepository.findAll().get(i);
+            entityCache.put(food.getName(), food);
+            foodList.add(food);
+        }
+        return foodList;
     }
 }
