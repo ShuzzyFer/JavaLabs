@@ -12,6 +12,7 @@ import java.io.IOException;
 @Service
 public class OkHttpRequest {
     public OkHttpRequest() {
+        //empty cause of logger
     }
 
     static Gson gson = new Gson();
