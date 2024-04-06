@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FoodRepository extends JpaRepository<Food, Long> {
-    @Query("SELECT food FROM Food food WHERE food.name=?1")
+    @Query("SELECT food FROM Food food WHERE food.name=:name")
     Food searchByName(String name);
 }

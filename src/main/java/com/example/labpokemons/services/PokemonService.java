@@ -1,5 +1,9 @@
 package com.example.labpokemons.services;
 
+import com.example.labpokemons.exceptions.BadRequestException;
+import com.example.labpokemons.exceptions.ExceptionEntity;
+import com.example.labpokemons.exceptions.NotFoundException;
+import com.example.labpokemons.exceptions.ServerException;
 import com.example.labpokemons.models.Ability;
 import com.example.labpokemons.models.Food;
 import com.example.labpokemons.models.MyPokemon;
@@ -14,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import static com.example.labpokemons.utilities.Constants.*;
 
 @Service
 public class PokemonService {
@@ -50,49 +56,114 @@ public class PokemonService {
     }
 
     public List<MyPokemon> searchByName(String name) {
-        return pokemonRepository.searchByName(name);
+        if (name ==null || name.equals(" ")) {
+            throw new BadRequestException(INVALID_INFO_MSG);
+        }
+        else {
+            try {
+                List<MyPokemon> result = new ArrayList<>(pokemonRepository.searchByName(name));
+                if (!result.isEmpty())
+                    return result;
+            } catch (Exception e) {
+                throw new ServerException(SERVER_ERROR_MSG);
+            }
+        }
+        throw new NotFoundException(NOT_FOUND_MSG);
     }
 
     public void insertPokemon(MyPokemon pokemon) {
-        pokemonRepository.save(pokemon);
+        if (pokemon.getName()==null || pokemon.getName().equals(" ")) {
+            throw new BadRequestException(INVALID_INFO_MSG);
+        }
+        try {
+            if(pokemon.getId() != null) {
+                pokemonRepository.save(pokemon);
+                return;
+            }
+        } catch(Exception e) {
+            throw new ServerException(SERVER_ERROR_MSG);
+        }
+        throw new NotFoundException(NOT_FOUND_MSG);
+
     }
 
     public void deletePokemonById(Long id) {
+        if (id ==null)
+            throw new BadRequestException(INVALID_INFO_MSG);
         for (int i = 0; i < pokemonRepository.searchById(id).getFood().size(); i++) {
             Optional<MyPokemon> pok = pokemonRepository.findById(id);
-            if (pok.isPresent()) {
-                Optional<Food> foo = pokemonRepository.searchById(id).getFood().stream().findFirst();
-                if (foo.isPresent()) {
-                    Food food = foo.get();
-                    food.getPokemons().remove(pokemonRepository.searchById(id));
-                    MyPokemon pokemon = pokemonRepository.searchById(id);
-                    pokemon.getFood().remove(food);
-                    updatePokemon(pokemon, pokemonRepository.searchById(id).getId());
-                    if (food.getPokemons().isEmpty())
-                        foodService.deleteFoodById(food.getId());
-                    else
-                        foodService.updateFood(food, food.getId());
+            try {
+                if (pok.isPresent()) {
+                    Optional<Food> foo = pokemonRepository.searchById(id).getFood().stream().findFirst();
+                    try {
+                        if (foo.isPresent()) {
+                            Food food = foo.get();
+                            food.getPokemons().remove(pokemonRepository.searchById(id));
+                            MyPokemon pokemon = pokemonRepository.searchById(id);
+                            pokemon.getFood().remove(food);
+                            updatePokemon(pokemon, pokemonRepository.searchById(id).getId());
+                            if (food.getPokemons().isEmpty())
+                                foodService.deleteFoodById(food.getId());
+                            else
+                                foodService.updateFood(food, food.getId());
+                        }
+                    } catch (Exception e) {
+                        throw new ServerException(SERVER_ERROR_MSG);
+                    }
+                    throw new NotFoundException(NOT_FOUND_MSG);
                 }
+            } catch (Exception e) {
+                throw new ServerException(SERVER_ERROR_MSG);
             }
+            throw new NotFoundException(NOT_FOUND_MSG);
         }
-        pokemonRepository.deleteById(id);
+        try {
+            pokemonRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new ServerException(SERVER_ERROR_MSG);
+        }
     }
 
     public void updatePokemon(MyPokemon pokemon, Long id) {
-        pokemon.setId(id);
-        pokemonRepository.save(pokemon);
+        if (pokemon.getName()==null || pokemon.getName().equals(" ")) {
+            throw new BadRequestException(INVALID_INFO_MSG);
+        }
+        try {
+            if (pokemonRepository.findById(id).isPresent()) {
+                pokemon.setId(id);
+                pokemonRepository.save(pokemon);
+                return;
+            }
+
+        } catch (Exception e) {
+            throw new ServerException(SERVER_ERROR_MSG);
+        }
+        throw new NotFoundException(NOT_FOUND_MSG);
     }
 
     public Set<Food> getFood(Long id) {
-        return pokemonRepository.searchById(id).getFood();
+        if(!pokemonRepository.findById(id).isPresent())
+            throw new BadRequestException(INVALID_INFO_MSG);
+        try {
+            List<Food> food = new ArrayList<>(pokemonRepository.searchById(id).getFood());
+            if(!food.isEmpty())
+                return pokemonRepository.searchById(id).getFood();
+        } catch (Exception e) {
+            throw new ServerException(SERVER_ERROR_MSG);
+        }
+        throw new NotFoundException(NOT_FOUND_MSG);
     }
 
     public List<MyPokemon> getALL() {
-        int counter=pokemonRepository.findAll().size();
-        List<MyPokemon> pokemons=new ArrayList<>();
-        for(int i=0; i<counter;i++) {
-            pokemons.add(pokemonRepository.findAll().get(i));
+        try {
+            int counter = pokemonRepository.findAll().size();
+            List<MyPokemon> pokemons = new ArrayList<>();
+            for (int i = 0; i < counter; i++) {
+                pokemons.add(pokemonRepository.findAll().get(i));
+            }
+            return pokemons;
+        } catch (Exception e) {
+            throw new ServerException(SERVER_ERROR_MSG);
         }
-        return pokemons;
     }
 }

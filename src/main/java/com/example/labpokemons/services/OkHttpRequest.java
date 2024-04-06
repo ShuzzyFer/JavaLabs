@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @Service
 public class OkHttpRequest {
-    private OkHttpRequest() {
+    public OkHttpRequest() {
     }
 
     static Gson gson = new Gson();
