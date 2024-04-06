@@ -11,9 +11,6 @@ import java.io.IOException;
 
 @Service
 public class OkHttpRequest {
-    public OkHttpRequest() { // Noncompliant - method is empty
-    }
-
     static Gson gson = new Gson();
     private static final String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
 
