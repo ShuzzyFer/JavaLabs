@@ -1,7 +1,6 @@
 package com.example.labpokemons.services;
 
 import com.example.labpokemons.exceptions.BadRequestException;
-import com.example.labpokemons.exceptions.ExceptionEntity;
 import com.example.labpokemons.exceptions.NotFoundException;
 import com.example.labpokemons.exceptions.ServerException;
 import com.example.labpokemons.models.Ability;
@@ -115,7 +114,6 @@ public class PokemonService {
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);
             }
-            throw new NotFoundException(NOT_FOUND_MSG);
         }
         try {
             pokemonRepository.deleteById(id);

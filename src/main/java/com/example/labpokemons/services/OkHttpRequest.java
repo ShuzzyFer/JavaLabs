@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @Service
 public class OkHttpRequest {
-    public OkHttpRequest() {
+    public OkHttpRequest() { // Noncompliant - method is empty
     }
 
     static Gson gson = new Gson();

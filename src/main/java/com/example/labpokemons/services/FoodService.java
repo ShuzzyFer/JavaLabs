@@ -38,7 +38,7 @@ public class FoodService {
                     food = foodRepository.searchByName(name);
                     entityCache.put(food.getName(), food);
                 }
-                if (food != null)
+                if (!food.getName().isEmpty())
                     return food;
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);

@@ -1,7 +1,5 @@
 package com.example.labpokemons.controllers;
 
-import com.example.labpokemons.exceptions.BadRequestException;
-import com.example.labpokemons.exceptions.NotFoundException;
 import com.example.labpokemons.models.Food;
 import com.example.labpokemons.models.MyPokemon;
 import com.example.labpokemons.services.PokemonService;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
-
-import static com.example.labpokemons.utilities.Constants.INVALID_INFO_MSG;
 
 @RestController
 public class PokeController {

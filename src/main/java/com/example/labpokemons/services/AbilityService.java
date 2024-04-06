@@ -4,7 +4,6 @@ import com.example.labpokemons.exceptions.BadRequestException;
 import com.example.labpokemons.exceptions.NotFoundException;
 import com.example.labpokemons.exceptions.ServerException;
 import com.example.labpokemons.models.Ability;
-import com.example.labpokemons.models.MyPokemon;
 import com.example.labpokemons.repositories.AbilityRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
 import com.github.oscar0812.pokeapi.models.pokemon.Pokemon;
