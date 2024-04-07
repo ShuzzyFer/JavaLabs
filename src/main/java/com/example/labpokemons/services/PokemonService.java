@@ -27,17 +27,19 @@ public class PokemonService {
     private final FoodService foodService;
     private final FoodRepository foodRepository;
 
-    public PokemonService(PokemonRepository pokemonRepository, AbilityService abilityService,
-                          FoodService foodService,
-                          FoodRepository foodRepository) {
+    public PokemonService(final PokemonRepository pokemonRepository,
+                          final AbilityService abilityService,
+                          final FoodService foodService,
+                          final FoodRepository foodRepository) {
         this.pokemonRepository = pokemonRepository;
         this.abilityService = abilityService;
         this.foodService = foodService;
         this.foodRepository = foodRepository;
     }
 
-    public List<MyPokemon> getPokemonsListByParams(String name) throws IOException {
-        List<MyPokemon> pokemons = OkHttpRequest.get(name).getPokemons();
+    public List<MyPokemon> getPokemonsListByParams(final String name)
+            throws IOException {
+        List<MyPokemon> pokemons = OkHttpRequest.get(name).getResults();
         for (int j = 0; j < pokemons.size(); j++) {
             List<Ability> abilities = new ArrayList<>();
             Pokemon pok = Client.getPokemonByName(pokemons.get(j).getName());
@@ -54,15 +56,16 @@ public class PokemonService {
         return pokemons;
     }
 
-    public List<MyPokemon> searchByName(String name) {
-        if (name ==null || name.equals(" ")) {
+    public List<MyPokemon> searchByName(final String name) {
+        if (name == null || name.equals(" ")) {
             throw new BadRequestException(INVALID_INFO_MSG);
-        }
-        else {
+        } else {
             try {
-                List<MyPokemon> result = new ArrayList<>(pokemonRepository.searchByName(name));
-                if (!result.isEmpty())
+                List<MyPokemon> result = new ArrayList<>(pokemonRepository
+                        .searchByName(name));
+                if (!result.isEmpty()) {
                     return result;
+                }
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);
             }
@@ -70,38 +73,48 @@ public class PokemonService {
         throw new NotFoundException(NOT_FOUND_MSG);
     }
 
-    public void insertPokemon(MyPokemon pokemon) {
-        if (pokemon.getName()==null || pokemon.getName().equals(" ")) {
+    public void insertPokemon(final MyPokemon pokemon) {
+        if (pokemon.getName() == null || pokemon.getName().equals(" ")) {
             throw new BadRequestException(INVALID_INFO_MSG);
         }
         try {
-            if(pokemon.getId() != null) {
+            if (pokemon.getId() != null) {
                 pokemonRepository.save(pokemon);
                 return;
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new ServerException(SERVER_ERROR_MSG);
         }
         throw new NotFoundException(NOT_FOUND_MSG);
 
     }
 
-    public void deletePokemonById(Long id) {
-        for (int i = 0; i < pokemonRepository.searchById(id).getFood().size(); i++) {
+    public void deletePokemonById(final Long id) {
+        for (int i = 0; i < pokemonRepository.searchById(id)
+                .getFood().size(); i++) {
             Optional<MyPokemon> pok = pokemonRepository.findById(id);
             try {
                 if (pok.isPresent()) {
-                    Optional<Food> foo = pokemonRepository.searchById(id).getFood().stream().findFirst();
+                    Optional<Food> foo = pokemonRepository
+                            .searchById(id)
+                            .getFood()
+                            .stream()
+                            .findFirst();
                         if (foo.isPresent()) {
                             Food food = foo.get();
-                            food.getPokemons().remove(pokemonRepository.searchById(id));
-                            MyPokemon pokemon = pokemonRepository.searchById(id);
+                            food.getPokemons()
+                                    .remove(pokemonRepository.searchById(id));
+                            MyPokemon pokemon = pokemonRepository
+                                    .searchById(id);
                             pokemon.getFood().remove(food);
-                            updatePokemon(pokemon, pokemonRepository.searchById(id).getId());
-                            if (food.getPokemons().isEmpty())
+                            updatePokemon(pokemon, pokemonRepository
+                                    .searchById(id)
+                                    .getId());
+                            if (food.getPokemons().isEmpty()) {
                                 foodService.deleteFoodById(food.getId());
-                            else
+                            } else {
                                 foodService.updateFood(food, food.getId());
+                            }
                         }
                 }
             } catch (Exception e) {
@@ -115,8 +128,8 @@ public class PokemonService {
         }
     }
 
-    public void updatePokemon(MyPokemon pokemon, Long id) {
-        if (pokemon.getName()==null || pokemon.getName().equals(" ")) {
+    public void updatePokemon(final MyPokemon pokemon, final Long id) {
+        if (pokemon.getName() == null || pokemon.getName().equals(" ")) {
             throw new BadRequestException(INVALID_INFO_MSG);
         }
         try {
@@ -132,13 +145,16 @@ public class PokemonService {
         throw new NotFoundException(NOT_FOUND_MSG);
     }
 
-    public Set<Food> getFood(Long id) {
-        if(!pokemonRepository.findById(id).isPresent())
+    public Set<Food> getFood(final Long id) {
+        if (!pokemonRepository.findById(id).isPresent()) {
             throw new BadRequestException(INVALID_INFO_MSG);
+        }
         try {
-            List<Food> food = new ArrayList<>(pokemonRepository.searchById(id).getFood());
-            if(!food.isEmpty())
+            List<Food> food = new ArrayList<>(pokemonRepository
+                    .searchById(id).getFood());
+            if (!food.isEmpty()) {
                 return pokemonRepository.searchById(id).getFood();
+            }
         } catch (Exception e) {
             throw new ServerException(SERVER_ERROR_MSG);
         }

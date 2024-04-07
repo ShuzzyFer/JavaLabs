@@ -21,14 +21,15 @@ public class FoodService {
     private final PokemonRepository pokemonRepository;
     private final EntityCache<String, Food> entityCache;
 
-    public FoodService(FoodRepository foodRepository, PokemonRepository pokemonRepository,
-                       EntityCache<String, Food> entityCache) {
+    public FoodService(final FoodRepository foodRepository,
+                       final PokemonRepository pokemonRepository,
+                       final EntityCache<String, Food> entityCache) {
         this.foodRepository = foodRepository;
         this.pokemonRepository = pokemonRepository;
         this.entityCache = entityCache;
     }
 
-    public Food searchByName(String name) {
+    public Food searchByName(final String name) {
         if (name == null || name.equals(" ")) {
             throw new BadRequestException(INVALID_INFO_MSG);
         } else {
@@ -38,8 +39,9 @@ public class FoodService {
                     food = foodRepository.searchByName(name);
                     entityCache.put(food.getName(), food);
                 }
-                if (!food.getName().isEmpty())
+                if (!food.getName().isEmpty()) {
                     return food;
+                }
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);
             }
@@ -47,10 +49,11 @@ public class FoodService {
         }
     }
 
-    public void insertFood(Food food, List<Long> ids) {
+    public void insertFood(final Food food, final List<Long> ids) {
         try {
-            if (foodRepository.searchByName(food.getName()) != null)
+            if (foodRepository.searchByName(food.getName()) != null) {
                 return;
+            }
         } catch (Exception e) {
             throw new ServerException(SERVER_ERROR_MSG);
         }
@@ -73,13 +76,13 @@ public class FoodService {
         }
     }
 
-    public void deleteFoodById(Long id) {
+    public void deleteFoodById(final Long id) {
         Optional<Food> food = foodRepository.findById(id);
         if (food.isPresent()) {
             entityCache.remove(food.get().getName());
-        }
-        else
+        } else {
             throw new BadRequestException(INVALID_INFO_MSG);
+        }
         try {
             foodRepository.deleteById(id);
         } catch (Exception e) {
@@ -87,10 +90,10 @@ public class FoodService {
         }
     }
 
-    public void updateFood(Food food, Long id) {
-        if(!foodRepository.findById(id).isPresent())
+    public void updateFood(final Food food, final Long id) {
+        if (!foodRepository.findById(id).isPresent()) {
             throw new NotFoundException(NOT_FOUND_MSG);
-        else {
+        } else {
             try {
                 food.setId(id);
                 Optional<Food> foodOld = foodRepository.findById(id);
@@ -105,23 +108,23 @@ public class FoodService {
         }
     }
 
-    public Set<MyPokemon> getPokemons(Long id) {
+    public Set<MyPokemon> getPokemons(final Long id) {
         Optional<Food> food = foodRepository.findById(id);
-        if (food.isPresent())
+        if (food.isPresent()) {
             try {
                 return food.get().getPokemons();
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);
             }
-        else {
+        } else {
             return new HashSet<>();
         }
     }
 
     public List<Food> getALL() {
-        int counter=foodRepository.findAll().size();
-        List<Food> foodList=new ArrayList<>();
-        for(int i=0; i<counter;i++) {
+        int counter = foodRepository.findAll().size();
+        List<Food> foodList = new ArrayList<>();
+        for (int i = 0; i < counter; i++) {
             try {
                 Food food = foodRepository.findAll().get(i);
                 entityCache.put(food.getName(), food);

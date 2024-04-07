@@ -32,19 +32,25 @@ public class AspectLogger {
 
     @Before("execution(* com.example.labpokemons.services.*.*(..))")
     public final void logBeforeServiceCommand(final JoinPoint joinPoint) {
-        logger.info(() -> String.format("Running method %s with args %s", joinPoint.getSignature().getName(),
+        logger.info(() -> String.format("Running method %s with args %s",
+                joinPoint.getSignature().getName(),
                 Arrays.toString(joinPoint.getArgs())));
     }
 
     @AfterReturning(pointcut = "execution(* com.example.labpokemons.services.*.*(..))")
     public final void logAfterServiceCommand(final JoinPoint joinPoint) {
-        logger.info(() -> String.format("Result of %s: success ", joinPoint.getSignature().getName()));
+        logger.info(() -> String.format("Result of %s: success ",
+                joinPoint.getSignature().getName()));
     }
 
-    @AfterThrowing(pointcut = "execution(* com.example.labpokemons.*.*.*(..))", throwing = "exception")
-    public final void logAfterError(final JoinPoint joinPoint, final Exception exception) {
+    @AfterThrowing(pointcut = "execution(* com.example.labpokemons.*.*.*(..))",
+            throwing = "exception")
+    public final void logAfterError(final JoinPoint joinPoint,
+                                    final Exception exception) {
         logger.warning(
-                () -> String.format("Error while running %s with args %s: %s", joinPoint.getSignature().getName(),
-                        Arrays.toString(joinPoint.getArgs()), exception.getMessage()));
+                () -> String.format("Error while running %s with args %s: %s",
+                        joinPoint.getSignature().getName(),
+                        Arrays.toString(joinPoint.getArgs()),
+                        exception.getMessage()));
     }
 }

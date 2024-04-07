@@ -14,19 +14,22 @@ public class OkHttpRequest {
     public OkHttpRequest() {
         //empty cause of logger
     }
-
-    static Gson gson = new Gson();
+    private static Gson gson = new Gson();
     private static final String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
 
-    public static PokemonListResponse get(String endpoint) throws IOException {
+    public static PokemonListResponse get(final String endpoint)
+            throws IOException {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(BASE_URL + '?' + endpoint).build();
+        Request request = new Request.Builder().url(BASE_URL + '?' + endpoint)
+                .build();
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                throw new IOException("Failed to fetch data: " + response.code());
+                throw new IOException("Failed to fetch data: " + response
+                        .code());
             }
-            return gson.fromJson(response.body().string(), PokemonListResponse.class);
+            return gson.fromJson(response.body()
+                    .string(), PokemonListResponse.class);
         }
     }
 }

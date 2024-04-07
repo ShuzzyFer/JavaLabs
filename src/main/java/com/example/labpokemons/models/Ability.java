@@ -1,51 +1,31 @@
 package com.example.labpokemons.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "abilities")
+@Getter
+@Setter
+@Schema(name = "Ability")
 public class Ability {
-    String name;
-    String description;
+    @Schema(description = "name")
+    private String name;
+
+    @Schema(description = "Description")
+    private String description;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "ID")
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "pokemon_id")
     @JsonIgnore
     private MyPokemon pokemon;
-
-    public MyPokemon getPokemon() {
-        return pokemon;
-    }
-
-    public void setPokemon(MyPokemon pokemon) {
-        this.pokemon = pokemon;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
 }

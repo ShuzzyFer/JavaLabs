@@ -17,38 +17,40 @@ public class PokeController {
 
 
     @Autowired
-    PokeController(PokemonService pokemonService) {
+    PokeController(final PokemonService pokemonService) {
         this.pokemonService = pokemonService;
     }
 
     @Transactional
     @GetMapping("/pokemons/{params}")
-    public List<MyPokemon> getPokemons(@PathVariable(name = "params") String name) throws IOException {
+    public List<MyPokemon> getPokemons(@PathVariable(name = "params") final String name) throws IOException {
         return pokemonService.getPokemonsListByParams(name);
     }
 
     @GetMapping("/getPokemon/{name}")
-    public List<MyPokemon> getPokemon(@PathVariable(name = "name") String name) {
+    public List<MyPokemon> getPokemon(@PathVariable(name = "name")
+                                          final String name) {
         return pokemonService.searchByName(name);
     }
 
     @PostMapping("/postPokemon")
-    public void insertPokemon(@RequestBody MyPokemon pokemon) {
+    public void insertPokemon(@RequestBody final MyPokemon pokemon) {
         pokemonService.insertPokemon(pokemon);
     }
 
     @DeleteMapping("/deletePokemon/{id}")
-    public void deletePokemon(@PathVariable(name = "id") Long id) {
+    public void deletePokemon(@PathVariable(name = "id") final Long id) {
         pokemonService.deletePokemonById(id);
     }
 
     @PutMapping("/updatePokemon/{id}")
-    public void updatePokemon(@RequestBody MyPokemon pokemon, @PathVariable(name = "id") Long id) {
+    public void updatePokemon(@RequestBody final MyPokemon pokemon,
+                              @PathVariable(name = "id") final Long id) {
         pokemonService.updatePokemon(pokemon, id);
     }
 
     @GetMapping("/getPokemonFood/{id}")
-    public Set<Food> getFood(@PathVariable(name = "id") Long id) {
+    public Set<Food> getFood(@PathVariable(name = "id") final Long id) {
         return pokemonService.getFood(id);
     }
 

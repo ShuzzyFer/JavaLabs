@@ -1,29 +1,21 @@
 package com.example.labpokemons.exceptions;
 
-import java.util.Date;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Date;
+@Setter
+@Getter
+@Schema(description = "Exception")
 public class ExceptionEntity {
+    @Schema(description = "timestamp")
     private Date timestamp;
+    @Schema(description = "Message")
     private String message;
 
-    public ExceptionEntity(Date timestamp, String message) {
+    public ExceptionEntity(final Date timestamp, final String message) {
         this.timestamp = timestamp;
-        this.message = message;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
         this.message = message;
     }
 }

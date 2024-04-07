@@ -12,32 +12,35 @@ import java.util.Set;
 public class FoodController {
     private final FoodService foodService;
 
-    public FoodController(FoodService foodService) {
+    public FoodController(final FoodService foodService) {
         this.foodService = foodService;
     }
 
     @GetMapping("/getFood/{name}")
-    public Food getFood(@PathVariable(name = "name") String name) {
+    public Food getFood(@PathVariable(name = "name") final String name) {
         return foodService.searchByName(name);
     }
 
     @PostMapping("/postFood/{id}")
-    public void insertAbility(@RequestBody Food food, @PathVariable(name = "id") List<Long> id) {
+    public void insertAbility(@RequestBody final Food food,
+                              @PathVariable(name = "id") final List<Long> id) {
         foodService.insertFood(food, id);
     }
 
     @DeleteMapping("/deleteFood/{id}")
-    public void deleteAbility(@PathVariable(name = "id") Long id) {
+    public void deleteAbility(@PathVariable(name = "id") final Long id) {
         foodService.deleteFoodById(id);
     }
 
     @PutMapping("/updateFood/{id}")
-    public void updateAbility(@RequestBody Food food, @PathVariable(name = "id") Long id) {
+    public void updateAbility(@RequestBody final Food food,
+                              @PathVariable(name = "id") final Long id) {
         foodService.updateFood(food, id);
     }
 
     @GetMapping("/getFoodPokemons/{id}")
-    public Set<MyPokemon> getPokemons(@PathVariable(name = "id") Long id) {
+    public Set<MyPokemon> getPokemons(@PathVariable(name = "id")
+                                          final Long id) {
         return foodService.getPokemons(id);
     }
 

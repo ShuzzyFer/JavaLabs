@@ -19,29 +19,32 @@ public class AbilityService {
     private final AbilityRepository abilityRepository;
     private final PokemonRepository pokemonRepository;
 
-    public AbilityService(AbilityRepository abilityRepository, PokemonRepository pokemonRepository) {
+    public AbilityService(final AbilityRepository abilityRepository,
+                          final PokemonRepository  pokemonRepository) {
         this.abilityRepository = abilityRepository;
         this.pokemonRepository = pokemonRepository;
     }
 
-    public Ability parseAbility(Pokemon pokemon, int i) {
+    public Ability parseAbility(final Pokemon pokemon, final int i) {
         Ability ability = new Ability();
-        ability.setDescription(pokemon.getAbilities().get(i).getAbility().getFlavorTextEntries()
+        ability.setDescription(pokemon.getAbilities().get(i)
+                .getAbility().getFlavorTextEntries()
                 .get(0)
                 .getFlavorText());
         ability.setName(pokemon.getAbilities().get(i).getAbility().getName());
         return ability;
     }
 
-    public List<Ability> searchByName(String name) {
-        if (name ==null || name.equals(" ")) {
+    public List<Ability> searchByName(final String name) {
+        if (name == null || name.equals(" ")) {
             throw new BadRequestException(INVALID_INFO_MSG);
-        }
-        else {
+        } else {
             try {
-                List<Ability> result = new ArrayList<>(abilityRepository.searchByName(name));
-                if (!result.isEmpty())
+                List<Ability> result = new ArrayList<>(abilityRepository
+                        .searchByName(name));
+                if (!result.isEmpty()) {
                     return result;
+                }
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);
             }
@@ -49,26 +52,26 @@ public class AbilityService {
         throw new NotFoundException(NOT_FOUND_MSG);
     }
 
-    public void insertAbility(Ability ability, Long id) {
-        if (ability.getName()==null || ability.getName().equals(" ")) {
+    public void insertAbility(final Ability ability, final Long id) {
+        if (ability.getName() == null || ability.getName().equals(" ")) {
             throw new BadRequestException(INVALID_INFO_MSG);
         }
         try {
-            if(ability.getName() != null) {
+            if (ability.getName() != null) {
                 ability.setPokemon(pokemonRepository.searchById(id));
                 abilityRepository.save(ability);
                 return;
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new ServerException(SERVER_ERROR_MSG);
         }
         throw new NotFoundException(NOT_FOUND_MSG);
     }
 
-    public void deleteAbilityById(Long id) {
-        if(!abilityRepository.findById(id).isPresent())
+    public void deleteAbilityById(final Long id) {
+        if (!abilityRepository.findById(id).isPresent()) {
             throw new BadRequestException(INVALID_INFO_MSG);
-        else {
+        } else {
             try {
                 abilityRepository.deleteById(id);
             } catch (Exception e) {
@@ -78,10 +81,10 @@ public class AbilityService {
 
     }
 
-    public void updateAbility(Ability ability, Long id) {
-        if(!abilityRepository.findById(id).isPresent())
+    public void updateAbility(final Ability ability, final Long id) {
+        if (!abilityRepository.findById(id).isPresent()) {
             throw new BadRequestException(INVALID_INFO_MSG);
-        else {
+        } else {
             try {
                 ability.setId(id);
                 abilityRepository.save(ability);
@@ -90,7 +93,7 @@ public class AbilityService {
             }
         }
     }
-    public List<Ability> searchByPokemonName(String name) {
+    public List<Ability> searchByPokemonName(final String name) {
         if (name == null || name.equals(" ")) {
             throw new BadRequestException(INVALID_INFO_MSG);
         } else {
