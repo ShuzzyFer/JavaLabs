@@ -39,8 +39,7 @@ public class FoodController {
     }
 
     @GetMapping("/getFoodPokemons/{id}")
-    public Set<MyPokemon> getPokemons(@PathVariable(name = "id")
-                                          final Long id) {
+    public Set<MyPokemon> getPokemons(@PathVariable(name = "id") final Long id) {
         return foodService.getPokemons(id);
     }
 

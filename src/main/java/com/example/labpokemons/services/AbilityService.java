@@ -20,7 +20,7 @@ public class AbilityService {
     private final PokemonRepository pokemonRepository;
 
     public AbilityService(final AbilityRepository abilityRepository,
-                          final PokemonRepository  pokemonRepository) {
+                          final PokemonRepository pokemonRepository) {
         this.abilityRepository = abilityRepository;
         this.pokemonRepository = pokemonRepository;
     }
@@ -93,6 +93,7 @@ public class AbilityService {
             }
         }
     }
+
     public List<Ability> searchByPokemonName(final String name) {
         if (name == null || name.equals(" ")) {
             throw new BadRequestException(INVALID_INFO_MSG);

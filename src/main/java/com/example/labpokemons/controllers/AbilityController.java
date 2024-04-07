@@ -3,6 +3,7 @@ package com.example.labpokemons.controllers;
 import com.example.labpokemons.models.Ability;
 import com.example.labpokemons.services.AbilityService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -14,8 +15,7 @@ public class AbilityController {
     }
 
     @GetMapping("/getAbility/{name}")
-    public List<Ability> getAbility(@PathVariable(name = "name")
-                                        final String name) {
+    public List<Ability> getAbility(@PathVariable(name = "name") final String name) {
         return abilityService.searchByName(name);
     }
 
@@ -35,9 +35,9 @@ public class AbilityController {
                               @PathVariable(name = "id") final Long id) {
         abilityService.updateAbility(ability, id);
     }
+
     @GetMapping("/getPokemonAbilities/{name}")
-    public List<Ability> getAbilities(@PathVariable(name = "name")
-                                          final String name) {
+    public List<Ability> getAbilities(@PathVariable(name = "name") final String name) {
         return abilityService.searchByPokemonName(name);
     }
 }

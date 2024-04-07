@@ -28,8 +28,7 @@ public class PokeController {
     }
 
     @GetMapping("/getPokemon/{name}")
-    public List<MyPokemon> getPokemon(@PathVariable(name = "name")
-                                          final String name) {
+    public List<MyPokemon> getPokemon(@PathVariable(name = "name") final String name) {
         return pokemonService.searchByName(name);
     }
 

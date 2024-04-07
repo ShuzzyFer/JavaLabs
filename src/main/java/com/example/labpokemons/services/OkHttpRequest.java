@@ -14,6 +14,7 @@ public class OkHttpRequest {
     public OkHttpRequest() {
         //empty cause of logger
     }
+
     private static Gson gson = new Gson();
     private static final String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
 

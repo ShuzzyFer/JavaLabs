@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface    PokemonRepository extends JpaRepository<MyPokemon, Long> {
+public interface PokemonRepository extends JpaRepository<MyPokemon, Long> {
     @Query("SELECT myPokemon FROM MyPokemon myPokemon WHERE myPokemon.name=?1")
     List<MyPokemon> searchByName(String name);
 

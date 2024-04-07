@@ -100,22 +100,22 @@ public class PokemonService {
                             .getFood()
                             .stream()
                             .findFirst();
-                        if (foo.isPresent()) {
-                            Food food = foo.get();
-                            food.getPokemons()
-                                    .remove(pokemonRepository.searchById(id));
-                            MyPokemon pokemon = pokemonRepository
-                                    .searchById(id);
-                            pokemon.getFood().remove(food);
-                            updatePokemon(pokemon, pokemonRepository
-                                    .searchById(id)
-                                    .getId());
-                            if (food.getPokemons().isEmpty()) {
-                                foodService.deleteFoodById(food.getId());
-                            } else {
-                                foodService.updateFood(food, food.getId());
-                            }
+                    if (foo.isPresent()) {
+                        Food food = foo.get();
+                        food.getPokemons()
+                                .remove(pokemonRepository.searchById(id));
+                        MyPokemon pokemon = pokemonRepository
+                                .searchById(id);
+                        pokemon.getFood().remove(food);
+                        updatePokemon(pokemon, pokemonRepository
+                                .searchById(id)
+                                .getId());
+                        if (food.getPokemons().isEmpty()) {
+                            foodService.deleteFoodById(food.getId());
+                        } else {
+                            foodService.updateFood(food, food.getId());
                         }
+                    }
                 }
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);
