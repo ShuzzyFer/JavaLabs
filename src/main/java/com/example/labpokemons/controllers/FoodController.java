@@ -12,8 +12,8 @@ import java.util.Set;
 public class FoodController {
     private final FoodService foodService;
 
-    public FoodController(final FoodService foodService) {
-        this.foodService = foodService;
+    public FoodController(final FoodService foodServ) {
+        this.foodService = foodServ;
     }
 
     @GetMapping("/getFood/{name}")

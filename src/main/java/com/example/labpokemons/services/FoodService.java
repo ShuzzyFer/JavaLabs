@@ -21,12 +21,12 @@ public class FoodService {
     private final PokemonRepository pokemonRepository;
     private final EntityCache<String, Food> entityCache;
 
-    public FoodService(final FoodRepository foodRepository,
-                       final PokemonRepository pokemonRepository,
-                       final EntityCache<String, Food> entityCache) {
-        this.foodRepository = foodRepository;
-        this.pokemonRepository = pokemonRepository;
-        this.entityCache = entityCache;
+    public FoodService(final FoodRepository foodRep,
+                       final PokemonRepository pokemonRep,
+                       final EntityCache<String, Food> entityC) {
+        this.foodRepository = foodRep;
+        this.pokemonRepository = pokemonRep;
+        this.entityCache = entityC;
     }
 
     public Food searchByName(final String name) {

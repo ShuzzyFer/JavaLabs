@@ -19,10 +19,10 @@ public class AbilityService {
     private final AbilityRepository abilityRepository;
     private final PokemonRepository pokemonRepository;
 
-    public AbilityService(final AbilityRepository abilityRepository,
-                          final PokemonRepository pokemonRepository) {
-        this.abilityRepository = abilityRepository;
-        this.pokemonRepository = pokemonRepository;
+    public AbilityService(final AbilityRepository abilityRep,
+                          final PokemonRepository pokemonRep) {
+        this.abilityRepository = abilityRep;
+        this.pokemonRepository = pokemonRep;
     }
 
     public Ability parseAbility(final Pokemon pokemon, final int i) {
@@ -102,8 +102,9 @@ public class AbilityService {
             throw new BadRequestException(INVALID_INFO_MSG);
         } else {
             try {
-                if (!pokemonRepository.searchByName(name).isEmpty())
+                if (!pokemonRepository.searchByName(name).isEmpty()) {
                     return abilityRepository.searchAbilitiesByPokemon(name);
+                }
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);
             }

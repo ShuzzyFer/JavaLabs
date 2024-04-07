@@ -15,8 +15,8 @@ public class ExceptionEntity {
     @Schema(description = "Message")
     private String message;
 
-    public ExceptionEntity(final Date timestamp, final String message) {
-        this.timestamp = timestamp;
-        this.message = message;
+    public ExceptionEntity(final Date tmstmp, final String msg) {
+        this.timestamp = tmstmp;
+        this.message = msg;
     }
 }

@@ -17,8 +17,8 @@ public class PokeController {
 
 
     @Autowired
-    PokeController(final PokemonService pokemonService) {
-        this.pokemonService = pokemonService;
+    PokeController(final PokemonService pokemonServ) {
+        this.pokemonService = pokemonServ;
     }
 
     @Transactional

@@ -10,8 +10,8 @@ import java.util.List;
 public class AbilityController {
     private final AbilityService abilityService;
 
-    public AbilityController(final AbilityService abilityService) {
-        this.abilityService = abilityService;
+    public AbilityController(final AbilityService abilityServ) {
+        this.abilityService = abilityServ;
     }
 
     @GetMapping("/getAbility/{name}")
