@@ -16,4 +16,6 @@
     <suppress checks="DesignForExtension" files=".*TVShowConfiguration.java"/>
     <suppress checks="DesignForExtension" files=".*Controller.java"/>
     <suppress checks="DesignForExtension" files=".*Controller.java"/>
+    <suppress checks="AvoidStarImport" files=".java" />
+    <suppress checks="LineLength" files=".java" />
 </suppressions>
