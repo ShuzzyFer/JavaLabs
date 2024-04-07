@@ -117,7 +117,7 @@ public class FoodService {
                 throw new ServerException(SERVER_ERROR_MSG);
             }
         } else {
-            return new HashSet<>();
+            throw new NotFoundException(NOT_FOUND_MSG);
         }
     }
 

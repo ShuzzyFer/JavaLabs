@@ -57,7 +57,7 @@ public class AbilityService {
             throw new BadRequestException(INVALID_INFO_MSG);
         }
         try {
-            if (ability.getName() != null) {
+            if (pokemonRepository.findById(id).isPresent()) {
                 ability.setPokemon(pokemonRepository.searchById(id));
                 abilityRepository.save(ability);
                 return;
@@ -83,14 +83,17 @@ public class AbilityService {
 
     public void updateAbility(final Ability ability, final Long id) {
         if (!abilityRepository.findById(id).isPresent()) {
-            throw new BadRequestException(INVALID_INFO_MSG);
+            throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
-                ability.setId(id);
-                abilityRepository.save(ability);
+                if (abilityRepository.findById(id).isPresent()) {
+                    ability.setId(id);
+                    abilityRepository.save(ability);
+                }
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);
             }
+
         }
     }
 
@@ -99,10 +102,12 @@ public class AbilityService {
             throw new BadRequestException(INVALID_INFO_MSG);
         } else {
             try {
-                return abilityRepository.searchAbilitiesByPokemon(name);
+                if (!pokemonRepository.searchByName(name).isEmpty())
+                    return abilityRepository.searchAbilitiesByPokemon(name);
             } catch (Exception e) {
                 throw new ServerException(SERVER_ERROR_MSG);
             }
+            throw new NotFoundException(NOT_FOUND_MSG);
         }
     }
 }
