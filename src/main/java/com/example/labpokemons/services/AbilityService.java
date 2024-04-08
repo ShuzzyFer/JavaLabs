@@ -70,7 +70,7 @@ public class AbilityService {
 
     public void deleteAbilityById(final Long id) {
         if (!abilityRepository.findById(id).isPresent()) {
-            throw new BadRequestException(INVALID_INFO_MSG);
+            throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
                 abilityRepository.deleteById(id);

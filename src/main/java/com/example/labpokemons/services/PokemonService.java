@@ -90,37 +90,40 @@ public class PokemonService {
     }
 
     public void deletePokemonById(final Long id) {
+        if (!pokemonRepository.findById(id).isPresent()) {
+            throw new NotFoundException(NOT_FOUND_MSG);
+        }
         for (int i = 0; i < pokemonRepository.searchById(id)
                 .getFood().size(); i++) {
             Optional<MyPokemon> pok = pokemonRepository.findById(id);
-            try {
-                if (pok.isPresent()) {
-                    Optional<Food> foo = pokemonRepository
-                            .searchById(id)
-                            .getFood()
-                            .stream()
-                            .findFirst();
-                    if (foo.isPresent()) {
-                        Food food = foo.get();
-                        food.getPokemons()
-                                .remove(pokemonRepository.searchById(id));
-                        MyPokemon pokemon = pokemonRepository
-                                .searchById(id);
-                        pokemon.getFood().remove(food);
-                        updatePokemon(pokemon, pokemonRepository
+                try {
+                    if (pok.isPresent()) {
+                        Optional<Food> foo = pokemonRepository
                                 .searchById(id)
-                                .getId());
-                        if (food.getPokemons().isEmpty()) {
-                            foodService.deleteFoodById(food.getId());
-                        } else {
-                            foodService.updateFood(food, food.getId());
+                                .getFood()
+                                .stream()
+                                .findFirst();
+                        if (foo.isPresent()) {
+                            Food food = foo.get();
+                            food.getPokemons()
+                                    .remove(pokemonRepository.searchById(id));
+                            MyPokemon pokemon = pokemonRepository
+                                    .searchById(id);
+                            pokemon.getFood().remove(food);
+                            updatePokemon(pokemon, pokemonRepository
+                                    .searchById(id)
+                                    .getId());
+                            if (food.getPokemons().isEmpty()) {
+                                foodService.deleteFoodById(food.getId());
+                            } else {
+                                foodService.updateFood(food, food.getId());
+                            }
                         }
                     }
+                } catch (Exception e) {
+                    throw new ServerException(SERVER_ERROR_MSG);
                 }
-            } catch (Exception e) {
-                throw new ServerException(SERVER_ERROR_MSG);
             }
-        }
         try {
             pokemonRepository.deleteById(id);
         } catch (Exception e) {
