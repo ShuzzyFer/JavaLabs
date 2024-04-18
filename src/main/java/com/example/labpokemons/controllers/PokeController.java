@@ -37,6 +37,11 @@ public class PokeController {
         pokemonService.insertPokemon(pokemon);
     }
 
+    @PostMapping("/postPokemons/bulk")
+    public void bulkUpdateParameters(@RequestBody List<MyPokemon> parameters) {
+        parameters.forEach(pokemonService::insertPokemon);
+    }
+
     @DeleteMapping("/deletePokemon/{id}")
     public void deletePokemon(@PathVariable(name = "id") final Long id) {
         pokemonService.deletePokemonById(id);
