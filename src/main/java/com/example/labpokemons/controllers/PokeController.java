@@ -38,7 +38,7 @@ public class PokeController {
     }
 
     @PostMapping("/postPokemons/bulk")
-    public void bulkUpdateParameters(@RequestBody List<MyPokemon> parameters) {
+    public void bulkUpdateParameters(@RequestBody final List<MyPokemon> parameters) {
         parameters.forEach(pokemonService::insertPokemon);
     }
 
