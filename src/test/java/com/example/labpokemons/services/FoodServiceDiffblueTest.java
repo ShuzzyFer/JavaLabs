@@ -1,9 +1,6 @@
 package com.example.labpokemons.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -19,11 +16,7 @@ import com.example.labpokemons.models.MyPokemon;
 import com.example.labpokemons.repositories.FoodRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -173,11 +166,44 @@ class FoodServiceDiffblueTest {
         assertTrue(food2.getPokemons().isEmpty());
     }
 
+    @Test
+    public void testInsertFood3() {
+        Food food = new Food();
+        food.setName("Apple");
+        Long id = 1L;
+        MyPokemon pokemon = new MyPokemon();
+        pokemon.setId(id);
+
+        when(foodRepository.searchByName(food.getName())).thenReturn(null);
+        when(pokemonRepository.findById(id)).thenReturn(Optional.of(pokemon));
+        when(pokemonRepository.searchById(id)).thenReturn(pokemon);
+
+        foodService.insertFood(food, Arrays.asList(id));
+
+        verify(entityCache).put(food.getName(), food);
+        verify(foodRepository).save(food);
+        assertFalse(food.getPokemons().isEmpty());
+    }
+
+    @Test
+    public void testInsertFoodWithEmptyPokemons() {
+        Food food = new Food();
+        food.setName("Apple");
+        Long id = 1L;
+
+        when(foodRepository.searchByName(food.getName())).thenReturn(null);
+        when(pokemonRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> {
+            foodService.insertFood(food, Arrays.asList(id));
+        });
+    }
+
     /**
      * Method under test: {@link FoodService#insertFood(Food, List)}
      */
     @Test
-    void testInsertFood3() {
+    void testInsertFood5() {
         Food food = new Food();
         food.setDescription("The characteristics of someone or something");
         food.setId(1L);
