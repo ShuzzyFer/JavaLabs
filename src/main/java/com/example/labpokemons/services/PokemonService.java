@@ -25,16 +25,13 @@ public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final AbilityService abilityService;
     private final FoodService foodService;
-    private final FoodRepository foodRepository;
 
     public PokemonService(final PokemonRepository pokemonRep,
                           final AbilityService abilityServ,
-                          final FoodService foodServ,
-                          final FoodRepository foodRep) {
+                          final FoodService foodServ) {
         this.pokemonRepository = pokemonRep;
         this.abilityService = abilityServ;
         this.foodService = foodServ;
-        this.foodRepository = foodRep;
     }
 
     public List<MyPokemon> getPokemonsListByParams(final String name)

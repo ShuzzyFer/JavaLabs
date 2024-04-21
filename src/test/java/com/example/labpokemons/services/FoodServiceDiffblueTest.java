@@ -167,7 +167,7 @@ class FoodServiceDiffblueTest {
     }
 
     @Test
-    public void testInsertFood3() {
+    void testInsertFood3() {
         Food food = new Food();
         food.setName("Apple");
         Long id = 1L;
@@ -186,7 +186,7 @@ class FoodServiceDiffblueTest {
     }
 
     @Test
-    public void testInsertFoodWithEmptyPokemons() {
+    void testInsertFoodWithEmptyPokemons() {
         Food food = new Food();
         food.setName("Apple");
         Long id = 1L;
@@ -195,7 +195,7 @@ class FoodServiceDiffblueTest {
         when(pokemonRepository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class, () -> {
-            foodService.insertFood(food, Arrays.asList(id));
+            foodService.insertFood(food, List.of(id));
         });
     }
 
