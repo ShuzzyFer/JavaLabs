@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @RestController
 public class PokeController {
@@ -38,8 +39,8 @@ public class PokeController {
     }
 
     @PostMapping("/postPokemons/bulk")
-    public void bulkUpdateParameters(@RequestBody final List<MyPokemon> parameters) {
-        parameters.forEach(pokemonService::insertPokemon);
+    public void bulkUpdateParameters(@RequestBody final MyPokemon[] parameters) {
+        Stream.of(parameters).forEach(pokemonService::insertPokemon);
     }
 
     @DeleteMapping("/deletePokemon/{id}")

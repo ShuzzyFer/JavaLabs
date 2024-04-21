@@ -13,10 +13,7 @@ import com.github.oscar0812.pokeapi.utils.Client;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.example.labpokemons.utilities.Constants.*;
 
@@ -25,13 +22,15 @@ public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final AbilityService abilityService;
     private final FoodService foodService;
+    private final FoodRepository foodRepository;
 
     public PokemonService(final PokemonRepository pokemonRep,
                           final AbilityService abilityServ,
-                          final FoodService foodServ) {
+                          final FoodService foodServ, FoodRepository foodRepository) {
         this.pokemonRepository = pokemonRep;
         this.abilityService = abilityServ;
         this.foodService = foodServ;
+        this.foodRepository = foodRepository;
     }
 
     public List<MyPokemon> getPokemonsListByParams(final String name)
@@ -58,8 +57,8 @@ public class PokemonService {
             throw new BadRequestException(INVALID_INFO_MSG);
         } else {
             try {
-                List<MyPokemon> result = new ArrayList<>(pokemonRepository
-                        .searchByName(name));
+                List<MyPokemon> result = pokemonRepository.findAll().stream()
+                        .filter(tv -> tv.getName().contains(name)).toList();
                 if (!result.isEmpty()) {
                     return result;
                 }
@@ -163,12 +162,9 @@ public class PokemonService {
 
     public List<MyPokemon> getALL() {
         try {
-            int counter = pokemonRepository.findAll().size();
-            List<MyPokemon> pokemons = new ArrayList<>();
-            for (int i = 0; i < counter; i++) {
-                pokemons.add(pokemonRepository.findAll().get(i));
-            }
-            return pokemons;
+            List<MyPokemon> result = pokemonRepository.findAll().stream()
+                    .sorted((pok1, pok2) -> pok1.getId().compareTo(pok2.getId())).toList();
+            return result;
         } catch (Exception e) {
             throw new ServerException(SERVER_ERROR_MSG);
         }

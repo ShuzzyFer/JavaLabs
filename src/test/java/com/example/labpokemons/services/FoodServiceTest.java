@@ -28,7 +28,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {FoodService.class})
 @ExtendWith(SpringExtension.class)
-class FoodServiceDiffblueTest {
+class FoodServiceTest {
     @MockBean
     private EntityCache<String, Food> entityCache;
 

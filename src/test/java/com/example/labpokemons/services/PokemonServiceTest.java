@@ -20,18 +20,14 @@ import com.example.labpokemons.models.MyPokemon;
 import com.example.labpokemons.repositories.FoodRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
 
-import java.io.IOException;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -40,7 +36,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {PokemonService.class})
 @ExtendWith(SpringExtension.class)
-class PokemonServiceDiffblueTest {
+class PokemonServiceTest {
     @MockBean
     private AbilityService abilityService;
 
@@ -56,65 +52,40 @@ class PokemonServiceDiffblueTest {
     @Autowired
     private PokemonService pokemonService;
 
-    /**
-     * Method under test: {@link PokemonService#searchByName(String)}
-     */
     @Test
-    void testSearchByName() {
-        when(pokemonRepository.searchByName(Mockito.<String>any())).thenReturn(new ArrayList<>());
-        assertThrows(NotFoundException.class, () -> pokemonService.searchByName("Name"));
-        verify(pokemonRepository).searchByName(Mockito.<String>any());
+    void testSearchByName_found() {
+        MyPokemon pikachu = new MyPokemon();
+        pikachu.setName("Pikachu");
+        when(pokemonRepository.findAll()).thenReturn(List.of(pikachu));
+
+        List<MyPokemon> result = pokemonService.searchByName("Pikachu");
+        assertEquals(1, result.size());
+        assertEquals(pikachu, result.get(0));
     }
 
-    /**
-     * Method under test: {@link PokemonService#searchByName(String)}
-     */
     @Test
-    void testSearchByName2() {
-        MyPokemon myPokemon = new MyPokemon();
-        myPokemon.setAbilities(new ArrayList<>());
-        myPokemon.setFood(new HashSet<>());
-        myPokemon.setId(1L);
-        myPokemon.setName(" ");
-        myPokemon.setUrl("https://example.org/example");
+    void testSearchByName_notFound() {
+        when(pokemonRepository.findAll()).thenReturn(List.of());
 
-        ArrayList<MyPokemon> myPokemonList = new ArrayList<>();
-        myPokemonList.add(myPokemon);
-        when(pokemonRepository.searchByName(Mockito.<String>any())).thenReturn(myPokemonList);
-        List<MyPokemon> actualSearchByNameResult = pokemonService.searchByName("Name");
-        verify(pokemonRepository).searchByName(Mockito.<String>any());
-        assertEquals(1, actualSearchByNameResult.size());
+        assertThrows(NotFoundException.class, () -> pokemonService.searchByName("Pikachu"));
     }
 
-    /**
-     * Method under test: {@link PokemonService#searchByName(String)}
-     */
     @Test
-    void testSearchByName3() {
-        assertThrows(BadRequestException.class, () -> pokemonService.searchByName(" "));
-    }
-
-    /**
-     * Method under test: {@link PokemonService#searchByName(String)}
-     */
-    @Test
-    void testSearchByName4() {
+    void testSearchByName_nullName() {
         assertThrows(BadRequestException.class, () -> pokemonService.searchByName(null));
     }
 
-    /**
-     * Method under test: {@link PokemonService#searchByName(String)}
-     */
     @Test
-    void testSearchByName5() {
-        when(pokemonRepository.searchByName(Mockito.<String>any())).thenThrow(new BadRequestException("An error occurred"));
-        assertThrows(ServerException.class, () -> pokemonService.searchByName("Name"));
-        verify(pokemonRepository).searchByName(Mockito.<String>any());
+    void testSearchByName_emptyName() {
+        assertThrows(BadRequestException.class, () -> pokemonService.searchByName(" "));
     }
 
-    /**
-     * Method under test: {@link PokemonService#insertPokemon(MyPokemon)}
-     */
+    @Test
+    void testSearchByName_serverError() {
+        when(pokemonRepository.findAll()).thenThrow(new RuntimeException());
+
+        assertThrows(ServerException.class, () -> pokemonService.searchByName("Pikachu"));
+    }
     @Test
     void testInsertPokemon() {
         MyPokemon myPokemon = new MyPokemon();

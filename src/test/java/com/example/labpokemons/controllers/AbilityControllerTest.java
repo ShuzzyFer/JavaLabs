@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ContextConfiguration(classes = {AbilityController.class})
 @ExtendWith(SpringExtension.class)
-class AbilityControllerDiffblueTest {
+class AbilityControllerTest {
     @Autowired
     private AbilityController abilityController;
 

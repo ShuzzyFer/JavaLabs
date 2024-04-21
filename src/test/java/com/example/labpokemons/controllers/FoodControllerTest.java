@@ -31,7 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ContextConfiguration(classes = {FoodController.class})
 @ExtendWith(SpringExtension.class)
-class FoodControllerDiffblueTest {
+class FoodControllerTest {
     @Autowired
     private FoodController foodController;
 

@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ContextConfiguration(classes = {PokeController.class})
 @ExtendWith(SpringExtension.class)
-class PokeControllerDiffblueTest {
+class PokeControllerTest {
     @Autowired
     private PokeController pokeController;
 

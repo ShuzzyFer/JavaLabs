@@ -35,7 +35,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {AbilityService.class})
 @ExtendWith(SpringExtension.class)
-class AbilityServiceDiffblueTest {
+class AbilityServiceTest {
     @MockBean
     private AbilityRepository abilityRepository;
 
