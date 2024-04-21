@@ -6,7 +6,6 @@ import com.example.labpokemons.exceptions.ServerException;
 import com.example.labpokemons.models.Ability;
 import com.example.labpokemons.models.Food;
 import com.example.labpokemons.models.MyPokemon;
-import com.example.labpokemons.repositories.FoodRepository;
 import com.example.labpokemons.repositories.PokemonRepository;
 import com.github.oscar0812.pokeapi.models.pokemon.Pokemon;
 import com.github.oscar0812.pokeapi.utils.Client;
@@ -22,15 +21,14 @@ public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final AbilityService abilityService;
     private final FoodService foodService;
-    private final FoodRepository foodRepository;
+
 
     public PokemonService(final PokemonRepository pokemonRep,
                           final AbilityService abilityServ,
-                          final FoodService foodServ, FoodRepository foodRepository) {
+                          final FoodService foodServ) {
         this.pokemonRepository = pokemonRep;
         this.abilityService = abilityServ;
         this.foodService = foodServ;
-        this.foodRepository = foodRepository;
     }
 
     public List<MyPokemon> getPokemonsListByParams(final String name)
@@ -162,9 +160,8 @@ public class PokemonService {
 
     public List<MyPokemon> getALL() {
         try {
-            List<MyPokemon> result = pokemonRepository.findAll().stream()
+            return pokemonRepository.findAll().stream()
                     .sorted((pok1, pok2) -> pok1.getId().compareTo(pok2.getId())).toList();
-            return result;
         } catch (Exception e) {
             throw new ServerException(SERVER_ERROR_MSG);
         }
