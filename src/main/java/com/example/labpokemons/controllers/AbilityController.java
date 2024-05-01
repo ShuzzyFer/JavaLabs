@@ -49,12 +49,12 @@ public class AbilityController {
     }
 
     @GetMapping("/get-counter")
-    public ResponseEntity<Integer> getCounter(){
+    public ResponseEntity<Integer> getCounter() {
         return ResponseEntity.ok(requestCounterService.get());
     }
 
     @GetMapping("/reset-counter")
-    public ResponseEntity<String> resetCounter(){
+    public ResponseEntity<String> resetCounter() {
         requestCounterService.reset();
         return ResponseEntity.ok("Request counter is successfully reset");
     }

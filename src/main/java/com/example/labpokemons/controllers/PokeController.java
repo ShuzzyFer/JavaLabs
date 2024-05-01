@@ -19,58 +19,15 @@ public class PokeController {
     private final RequestCounterService requestCounterService;
 
     @Autowired
-    PokeController(final PokemonService pokemonServ, PokemonRepository pokemonRepository, RequestCounterService requestCounterService) {
+    PokeController(final PokemonService pokemonServ, final PokemonRepository pokemonRepository, final RequestCounterService requestCounterService) {
         this.pokemonService = pokemonServ;
         this.pokemonRepository = pokemonRepository;
         this.requestCounterService = requestCounterService;
     }
 
-//    @Transactional
-//    @GetMapping("/pokemons/{params}")
-//    public List<MyPokemon> getPokemons(@PathVariable(name = "params") final String name) throws IOException {
-//        requestCounterService.increment();
-//        return pokemonService.getPokemonsListByParams(name);
-//    }
-//
-//    @GetMapping("/getPokemon/{name}")
-//    public List<MyPokemon> getPokemon(@PathVariable(name = "name") final String name) {
-//        requestCounterService.increment();
-//        return pokemonService.searchByName(name);
-//    }
-//
-//    @PostMapping("/postPokemon")
-//    public void insertPokemon(@RequestBody final MyPokemon pokemon) {
-//        requestCounterService.increment();
-//        pokemonService.insertPokemon(pokemon);
-//    }
-//
-//    @PostMapping("/postPokemons/bulk")
-//    public void bulkUpdateParameters(@RequestBody final MyPokemon[] parameters) {
-//        requestCounterService.increment();
-//        Stream.of(parameters).forEach(pokemonService::insertPokemon);
-//    }
-//
-//    @DeleteMapping("/deletePokemon/{id}")
-//    public void deletePokemon1(@PathVariable(name = "id") final Long id) {
-//        requestCounterService.increment();
-//        pokemonService.deletePokemonById(id);
-//    }
-//
-//    @PutMapping("/updatePokemon/{id}")
-//    public void updatePokemon(@RequestBody final MyPokemon pokemon,
-//                              @PathVariable(name = "id") final Long id) {
-//        requestCounterService.increment();
-//        pokemonService.updatePokemon(pokemon, id);
-//    }
-//
-//    @GetMapping("/getPokemonFood/{id}")
-//    public Set<Food> getFood(@PathVariable(name = "id") final Long id) {
-//        requestCounterService.increment();
-//        return pokemonService.getFood(id);
-//    }
-
     @GetMapping("/viewAllPokemons")
     public String viewAllPokemons(Model model) {
+        requestCounterService.increment();
         List<MyPokemon> pokemons = pokemonService.getALL();
         model.addAttribute("pokemons", pokemons);
         return "viewAllPokemons";
@@ -78,11 +35,13 @@ public class PokeController {
 
     @GetMapping("/addPokemon")
     public String addPokemonForm() {
+        requestCounterService.increment();
         return "addPokemon";
     }
 
     @PostMapping("/postPokemon")
     public String addPokemon(@RequestParam String name, @RequestParam String url) {
+        requestCounterService.increment();
         MyPokemon pokemon = new MyPokemon();
         pokemon.setName(name);
         pokemon.setUrl(url);
@@ -92,17 +51,20 @@ public class PokeController {
 
     @GetMapping("/deletePokemon/{id}")
     public String deletePokemon(@PathVariable Long id) {
+        requestCounterService.increment();
         pokemonService.deletePokemonById(id);
         return "redirect:/viewAllPokemons";
     }
 
     @GetMapping("/")
     public String index() {
+        requestCounterService.increment();
         return "index";
     }
 
     @GetMapping("/searchPokemon")
     public String searchPokemon(@RequestParam String name, Model model) {
+        requestCounterService.increment();
         List<MyPokemon> pokemons = pokemonService.searchByName(name);
         model.addAttribute("pokemons", pokemons);
         return "searchResults";
@@ -110,6 +72,7 @@ public class PokeController {
 
     @GetMapping("/updatePokemonForm")
     public String updatePokemonForm(@RequestParam(name = "id") Long id, Model model) {
+        requestCounterService.increment();
         MyPokemon pokemon = pokemonRepository.searchById(id);
         model.addAttribute("pokemon", pokemon);
         return "updatePokemonForm";
@@ -117,6 +80,7 @@ public class PokeController {
 
     @PostMapping("/updatePokemon")
     public String updatePokemon(@ModelAttribute MyPokemon pokemon, @RequestParam Long id) {
+        requestCounterService.increment();
         pokemonService.updatePokemon(pokemon, id);
         return "redirect:/viewAllPokemons";
     }
