@@ -68,6 +68,7 @@ public class PokemonService {
     }
 
     public void insertPokemon(final MyPokemon pokemon) {
+        pokemon.setId((long) 5);
         if (pokemon.getName() == null || pokemon.getName().equals(" ")) {
             throw new BadRequestException(INVALID_INFO_MSG);
         }

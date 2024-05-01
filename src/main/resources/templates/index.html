@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Pokemon Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover {
+      background-color: #111;
+    }
+
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    input[type="text"],
+    input[type="submit"] {
+      padding: 8px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+<h1>Welcome to Pokemon Management</h1>
+<ul>
+  <li><a th:href="@{/viewAllPokemons}">View All Pokemons</a></li>
+  <li><a th:href="@{/addPokemon}">Add Pokemon</a></li>
+</ul>
+<form action="/updatePokemonForm" method="get">
+  <label for="pokemonId">Enter Pokemon ID to Update:</label>
+  <input type="text" id="pokemonId" name="id">
+  <input type="submit" value="Update">
+</form>
+</body>
+</html>
