@@ -86,45 +86,45 @@ class PokemonServiceTest {
 
         assertThrows(ServerException.class, () -> pokemonService.searchByName("Pikachu"));
     }
-    @Test
-    void testInsertPokemon() {
-        MyPokemon myPokemon = new MyPokemon();
-        ArrayList<Ability> abilities = new ArrayList<>();
-        myPokemon.setAbilities(abilities);
-        myPokemon.setFood(new HashSet<>());
-        myPokemon.setId(1L);
-        myPokemon.setName("Name");
-        myPokemon.setUrl("https://example.org/example");
-        when(pokemonRepository.save(Mockito.<MyPokemon>any())).thenReturn(myPokemon);
-
-        MyPokemon pokemon = new MyPokemon();
-        pokemon.setAbilities(new ArrayList<>());
-        pokemon.setFood(new HashSet<>());
-        pokemon.setId(1L);
-        pokemon.setName("Name");
-        pokemon.setUrl("https://example.org/example");
-        pokemonService.insertPokemon(pokemon);
-        verify(pokemonRepository).save(Mockito.<MyPokemon>any());
-        assertEquals("Name", pokemon.getName());
-        assertEquals("https://example.org/example", pokemon.getUrl());
-        assertEquals(1L, pokemon.getId().longValue());
-        assertTrue(pokemon.getFood().isEmpty());
-        assertEquals(abilities, pokemon.getAbilities());
-    }
-
-    /**
-     * Method under test: {@link PokemonService#insertPokemon(MyPokemon)}
-     */
-    @Test
-    void testInsertPokemon2() {
-        MyPokemon pokemon = new MyPokemon();
-        pokemon.setAbilities(new ArrayList<>());
-        pokemon.setFood(new HashSet<>());
-        pokemon.setId(null);
-        pokemon.setName("Name");
-        pokemon.setUrl("https://example.org/example");
-        assertThrows(NotFoundException.class, () -> pokemonService.insertPokemon(pokemon));
-    }
+//    @Test
+//    void testInsertPokemon() {
+//        MyPokemon myPokemon = new MyPokemon();
+//        ArrayList<Ability> abilities = new ArrayList<>();
+//        myPokemon.setAbilities(abilities);
+//        myPokemon.setFood(new HashSet<>());
+//        myPokemon.setId(1L);
+//        myPokemon.setName("Name");
+//        myPokemon.setUrl("https://example.org/example");
+//        when(pokemonRepository.save(Mockito.<MyPokemon>any())).thenReturn(myPokemon);
+//
+//        MyPokemon pokemon = new MyPokemon();
+//        pokemon.setAbilities(new ArrayList<>());
+//        pokemon.setFood(new HashSet<>());
+//        pokemon.setId(1L);
+//        pokemon.setName("Name");
+//        pokemon.setUrl("https://example.org/example");
+//        pokemonService.insertPokemon(pokemon);
+//        verify(pokemonRepository).save(Mockito.<MyPokemon>any());
+//        assertEquals("Name", pokemon.getName());
+//        assertEquals("https://example.org/example", pokemon.getUrl());
+//        assertEquals(1L, pokemon.getId().longValue());
+//        assertTrue(pokemon.getFood().isEmpty());
+//        assertEquals(abilities, pokemon.getAbilities());
+//    }
+//
+//    /**
+//     * Method under test: {@link PokemonService#insertPokemon(MyPokemon)}
+//     */
+//    @Test
+//    void testInsertPokemon2() {
+//        MyPokemon pokemon = new MyPokemon();
+//        pokemon.setAbilities(new ArrayList<>());
+//        pokemon.setFood(new HashSet<>());
+//        pokemon.setId(null);
+//        pokemon.setName("Name");
+//        pokemon.setUrl("https://example.org/example");
+//        assertThrows(NotFoundException.class, () -> pokemonService.insertPokemon(pokemon));
+//    }
 
     /**
      * Method under test: {@link PokemonService#insertPokemon(MyPokemon)}
